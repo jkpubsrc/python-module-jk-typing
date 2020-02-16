@@ -9,7 +9,7 @@ This module provides capabilities for type checking function arguments.
 Information about this module can be found here:
 
 * [github.org](https://github.com/jkpubsrc/python-module-jk-typing)
-	* [Documentation](https://github.com/jkpubsrc/python-module-jk-typing/documentation)
+	* [Documentation](https://github.com/jkpubsrc/python-module-jk-typing/tree/master/documentation)
 * [pypi.python.org](https://pypi.python.org/pypi/jk_typing)
 
 Why this module?
@@ -17,14 +17,14 @@ Why this module?
 
 Python nowadays is capable of managing type hints for function arguments and return values. Unfortunately Python does not perform type checking automatically. This module provides capabilities of performing type checking automatically.
 
-For more details have a look at the [documentation](https://github.com/jkpubsrc/python-module-jk-typing/documentation).
+For more details have a look at the [documentation](https://github.com/jkpubsrc/python-module-jk-typing/tree/master/documentation).
 
 Limitations of this module
 --------------------------
 
 Type checking is not implemented in pure Python. Therefore it is slower as if the Python interpreter would perform type checking itself. Additionally this module has not yet a complete implementation of all kinds of types. (This will change in the future, maybe with your help.)
 
-For more details have a look at the [documentation](https://github.com/jkpubsrc/python-module-jk-typing/documentation).
+For more details have a look at the [documentation](https://github.com/jkpubsrc/python-module-jk-typing/tree/master/documentation).
 
 How to use this module
 ----------------------
