@@ -1,0 +1,52 @@
+{
+	"language": "python3",
+	"name": "jk_typing",
+	"version": "0.2020.2.16",
+	"meta": {
+		"description": "This module provides capabilities for type checking function arguments.",
+		"keywords": [
+			"typing",
+			"type-checking"
+		],
+		"license": "Apache 2.0",
+		"development_status": "alpha",
+		"authors": [
+			{
+				"name": "Jürgen Knauth",
+				"email": "pubsrc@binary-overflow.de"
+			}
+		],
+		"wiki": {
+			"page": "DevDocs:jk_typing"
+		}
+	},
+	"repositories": [
+		{
+			"type": "github",
+			"user": "jkpubsrc",
+			"project": "python-module-jk-typing",
+			"devon_publish": false
+		},
+		{
+			"type": "pypy",
+			"project": "jk_typing",
+			"devon_publish": false
+		}
+	],
+	"source": {
+		"packages": [
+			"jk_typing"
+		],
+		"extra_data_files": [
+		],
+		"extra_binary_files": [
+		]
+	},
+	"requirements": {
+		"python_packages": [
+		],
+		"python_packages_dev": [
+		]
+	}
+}
+
