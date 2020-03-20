@@ -1,15 +1,49 @@
 
 
+import sys
 import typing
 import inspect
 
 
 
+"""
+def __checkUnion(value, typeSpecs:list):
+	for typeSpec in typeSpecs:
+		if __checkType(value, typeSpec):
+			return True
+	return False
+#
+"""
+
+
+
 def __checkType(value, typeSpec):
-	if typeSpec.__class__.__name__ == "_Union":
-		#print(">>", typeSpec.__origin__ is Union)
-		#print(">>>", typeSpec.__args__)
-		return isinstance(value, typeSpec.__args__)
+	if typeSpec.__class__.__module__ == "typing":
+		assert sys.version_info.major >= 3
+		if sys.version_info.minor >= 6:
+
+			print("----", typeSpec, "----", typeSpec.__class__.__name__)
+			if typeSpec.__class__.__name__  == "_Union":
+				print(">>>>", type(value), "::::", typeSpec.__args__)
+				return isinstance(value, typeSpec.__args__)
+			else:
+				return isinstance(value, typeSpec)
+
+		else:
+			# ignore argument checking as the python implementation is not yet
+			# mature enough and we do not intend to backport functionalty for
+			# older python versions that already are built into python 3.6 and above.
+
+			"""
+			elif typeSpec.__class__.__name__  == "UnionMeta":	# python 3.5
+				# print(">>>>", typeSpec.__union_params__)
+				return isinstance(value, typeSpec.__union_params__)
+			else:
+				return isinstance(value, typeSpec)
+			"""
+
+			return True
+
 	else:
 		return isinstance(value, typeSpec)
 #
@@ -28,7 +62,7 @@ def checkFunctionSignature(bDebug:bool = False):
 
 			# this function is executed every time the function is invoked.
 			def wrapped(*args, **kwargs):
-				print(fn.__qualname__ + "()")
+				# print(fn.__qualname__ + "()")
 
 				sig = inspect.signature(fn).bind(*args, **kwargs)
 				for k, v in sig.arguments.items():
@@ -79,6 +113,9 @@ def checkFunctionSignature(bDebug:bool = False):
 				for k, v in sig.arguments.items():
 					typeSpec = annotations.get(k)
 					if typeSpec is not None:
+						# print("--", fn, "--")
+						# print("----", v)
+						# print("----", typeSpec)
 						if not __checkType(v, typeSpec):
 							raise ValueError("Argument " + repr(k) + " for " + fn.__name__ + "() is of type '" + repr(type(v)) + "' which does not match '" + repr(typeSpec) + "' as expected!")
 

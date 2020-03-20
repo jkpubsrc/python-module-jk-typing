@@ -6,6 +6,8 @@ Introduction
 
 This module provides capabilities for type checking function arguments.
 
+Please note that a full type check with this module is not possible, since this is fundamentally not possible due to limitiations of Python itself.
+
 Information about this module can be found here:
 
 * [github.org](https://github.com/jkpubsrc/python-module-jk-typing)

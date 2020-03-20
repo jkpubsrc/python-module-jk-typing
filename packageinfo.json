@@ -1,9 +1,9 @@
 {
 	"language": "python3",
 	"name": "jk_typing",
-	"version": "0.2020.2.16",
+	"version": "0.2020.3.20",
 	"meta": {
-		"description": "This module provides capabilities for type checking function arguments.",
+		"description": "This module provides capabilities for type checking function arguments. (NOTE: A full type check with this module is not possible, since this is fundamentally not possible due to limitiations of Python itself.)",
 		"keywords": [
 			"typing",
 			"type-checking"
