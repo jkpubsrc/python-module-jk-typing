@@ -22,9 +22,9 @@ def __checkType(value, typeSpec):
 		assert sys.version_info.major >= 3
 		if sys.version_info.minor >= 6:
 
-			print("----", typeSpec, "----", typeSpec.__class__.__name__)
+			#print("----", typeSpec, "----", typeSpec.__class__.__name__)
 			if typeSpec.__class__.__name__  == "_Union":
-				print(">>>>", type(value), "::::", typeSpec.__args__)
+				#print(">>>>", type(value), "::::", typeSpec.__args__)
 				return isinstance(value, typeSpec.__args__)
 			else:
 				return isinstance(value, typeSpec)
