@@ -1,13 +1,12 @@
 ﻿
 
 
-__version__ = "0.2020.3.20"
+__version__ = "0.2021.1.18"
 
 
 
 import typing
 
-from .checkFunctionSignature import checkFunctionSignature
-
+from .checkFunctionSignature import checkFunctionSignature, deactiveTypeChecking, isTypeCheckingEnabled
 
 

@@ -17,10 +17,50 @@ def __checkUnion(value, typeSpecs:list):
 
 
 
+assert sys.version_info.major >= 3
+
+# now: deactive type checking by default for now
+_type_checking_enabled = False
+
+if (sys.version_info.major < 3) or (
+	(sys.version_info.major == 3) and (sys.version_info.minor < 5)):
+	_type_checking_enabled = False
+
+	# ignore argument checking as the python implementation is not yet
+	# mature enough and we do not intend to backport functionalty for
+	# older python versions that already are built into python 3.6 and above.
+
+
+
+
+
+
+
+
+def deactiveTypeChecking():
+	global _type_checking_enabled
+	_type_checking_enabled = False
+#
+
+def isTypeCheckingEnabled() -> bool:
+	global _type_checking_enabled
+	return _type_checking_enabled
+#
+
+
+
+
+
+
+
+
+
+
+
 def __checkType(value, typeSpec):
 	if typeSpec.__class__.__module__ == "typing":
-		assert sys.version_info.major >= 3
-		if sys.version_info.minor >= 6:
+		global _type_checking_enabled
+		if _type_checking_enabled:
 
 			#print("----", typeSpec, "----", typeSpec.__class__.__name__)
 			if typeSpec.__class__.__name__  == "_Union":
@@ -30,9 +70,7 @@ def __checkType(value, typeSpec):
 				return isinstance(value, typeSpec)
 
 		else:
-			# ignore argument checking as the python implementation is not yet
-			# mature enough and we do not intend to backport functionalty for
-			# older python versions that already are built into python 3.6 and above.
+			# ignore argument checking
 
 			"""
 			elif typeSpec.__class__.__name__  == "UnionMeta":	# python 3.5
