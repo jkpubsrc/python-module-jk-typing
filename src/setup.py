@@ -36,7 +36,7 @@ setup(
 	packages = [
 		"jk_typing",
 	],
-	version = "0.2021.11.14",
+	version = "0.2021.12.1",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",

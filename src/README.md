@@ -21,6 +21,11 @@ Python nowadays is capable of managing type hints for function arguments and ret
 
 For more details have a look at the [documentation](https://github.com/jkpubsrc/python-module-jk-typing/tree/master/documentation).
 
+Requirements
+------------
+
+This module requires Python 3.7 or later. It can not be used on older releases of Python because of limitations of module `typing`.
+
 Limitations of this module
 --------------------------
 

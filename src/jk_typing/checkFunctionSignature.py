@@ -56,6 +56,10 @@ class __CheckIfNone(object):
 	def __call__(self, value) -> bool:
 		return value is None
 	#
+	def dump(self, prefix:str):
+		print(prefix + "__CheckIfNone<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		print(prefix + ")>")
+	#
 #
 
 class __CheckAlwaysTrue(object):
@@ -65,6 +69,10 @@ class __CheckAlwaysTrue(object):
 	#
 	def __call__(self, value) -> bool:
 		return True
+	#
+	def dump(self, prefix:str):
+		print(prefix + "__CheckAlwaysTrue<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		print(prefix + ")>")
 	#
 #
 
@@ -78,6 +86,11 @@ class __CheckIfType(object):
 		if not isinstance(value, self.__expectedType):
 			return False
 		return True
+	#
+	def dump(self, prefix:str):
+		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		print(prefix + "\t__expectedType=" + repr(self.__expectedType))
+		print(prefix + ")>")
 	#
 #
 
@@ -95,6 +108,13 @@ class __CheckIfType__CheckItems(object):
 			if not self.__nestedCheckFunc.__call__(v):
 				return False
 		return True
+	#
+	def dump(self, prefix:str):
+		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		print(prefix + "\t__expectedType=" + repr(self.__expectedType))
+		print(prefix + "\t__nestedCheckFunc=")
+		self.__nestedCheckFunc.dump(prefix + "\t\t")
+		print(prefix + ")>")
 	#
 #
 
@@ -115,6 +135,14 @@ class __CheckIfDict(object):
 				return False
 		return True
 	#
+	def dump(self, prefix:str):
+		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		print(prefix + "\t__keyCheckFunc=")
+		self.__keyCheckFunc.dump(prefix + "\t\t")
+		print(prefix + "\t__valueCheckFunc=")
+		self.__valueCheckFunc.dump(prefix + "\t\t")
+		print(prefix + ")>")
+	#
 #
 
 class __CheckIfType__Union(object):
@@ -128,6 +156,14 @@ class __CheckIfType__Union(object):
 			if f.__call__(value):
 				return True
 		return False
+	#
+	def dump(self, prefix:str):
+		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		print(prefix + "\t__nestedCheckFuncs=[")
+		for x in self.__nestedCheckFuncs:
+			x.dump(prefix + "\t\t")
+		print(prefix + "\t]")
+		print(prefix + ")>")
 	#
 #
 
@@ -186,9 +222,11 @@ def _0_compile_checking(argName:typing.Union[str,None], sType:str, typeSpec, out
 # @param	str argName			(optional) Argument name. If none is specified, this should be a return value.
 # @param	str sType			(required) A string representation of the return type (for output).
 # @param	* typeSpec			(required) A type specification object as returned by inspect
+# @param	any defaultValue	(required) The default value. If it is (null) an additional check for empty data is added. Specify `inspect._empty` if not defined.
 # @param	str[] outWarnList	(required) A list that receives warning messages.
+# @param	Returns a callable (based on a hierarchical object model) that performs the type checking or (null) if no type checking should be performed
 #
-def _compile_checking(argName:typing.Union[str,None], sType:str, typeSpec, outWarnList:list):
+def _compile_checking(argName:typing.Union[str,None], sType:str, typeSpec, defaultValue, outWarnList:list):
 	if typeSpec is None:
 		# void
 		return __CheckIfNone(argName, sType)
@@ -201,34 +239,44 @@ def _compile_checking(argName:typing.Union[str,None], sType:str, typeSpec, outWa
 		# generic
 
 		if typeSpec._name == "List":
-			return __CheckIfType__CheckItems(argName, sType, list, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
+			ret = __CheckIfType__CheckItems(argName, sType, list, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
 
 		elif typeSpec._name == "Tuple":
-			return __CheckIfType__CheckItems(argName, sType, tuple, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
+			ret = __CheckIfType__CheckItems(argName, sType, tuple, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
 
 		elif typeSpec._name == "Set":
-			return __CheckIfType__CheckItems(argName, sType, set, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
+			ret = __CheckIfType__CheckItems(argName, sType, set, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
 
 		elif typeSpec._name == "FrozenSet":
-			return __CheckIfType__CheckItems(argName, sType, frozenset, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
+			ret = __CheckIfType__CheckItems(argName, sType, frozenset, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
 
 		elif typeSpec._name == "Deque":
-			return __CheckIfType__CheckItems(argName, sType, deque, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
+			ret = __CheckIfType__CheckItems(argName, sType, deque, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
 
 		elif typeSpec._name == "Dict":
-			return __CheckIfDict(argName, sType, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList), _0_compile_checking(argName, sType, typeSpec.__args__[1], outWarnList))
+			ret = __CheckIfDict(argName, sType, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList), _0_compile_checking(argName, sType, typeSpec.__args__[1], outWarnList))
 
 		elif typeSpec.__origin__ == typing.Union:
-			return __CheckIfType__Union(argName, sType, [ _0_compile_checking(argName, sType, t, outWarnList) for t in typeSpec.__args__ ])
+			ret = __CheckIfType__Union(argName, sType, [ _0_compile_checking(argName, sType, t, outWarnList) for t in typeSpec.__args__ ])
 
 		else:
 			if outWarnList is not None:
 				outWarnList.append("Can't check this type: " + repr(typeSpec))
-			return __CheckAlwaysTrue(argName, sType)
+			ret = __CheckAlwaysTrue(argName, sType)
+
+		if defaultValue is None:
+			ret = __CheckIfType__Union(argName, sType, [ ret, __CheckIfNone(argName, sType) ])
+
+		return ret
 
 	else:
 		# regular type
-		return __CheckIfType(argName, sType, typeSpec)
+		ret = __CheckIfType(argName, sType, typeSpec)
+
+		if defaultValue is None:
+			ret = __CheckIfType__Union(argName, sType, [ ret, __CheckIfNone(argName, sType) ])
+
+		return ret
 #
 
 
@@ -354,19 +402,44 @@ def _getTypeDescr(t) -> str:
 #
 
 
+def _debug_dumpObj(prefix:str, someObj, bSkipUnderscores:bool = True, names:list = None):
+	#print(prefix + "| " + repr(someObj))
+	if someObj is None:
+		return
+	if names is None:
+		names = dir(someObj)
+	for key in names:
+		if bSkipUnderscores and key.startswith("_"):
+			continue
+		print(prefix + "|\t" + key + ": " + str(getattr(someObj, key)))
+#
+
 
 # this is the annotation wrapper that receives arguments and returns the function that does the wrapping
-def checkFunctionSignature(bDebug:bool = False, logDescend:str = None):
+def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDescend:str = None):
 	assert isinstance(bDebug, bool)
+	assert isinstance(bDebugComp, bool)
 
 	# this function is executed for every function definition
 	def _wrap_the_function(fn):
 		#print(fn)
-		annotations = typing.get_type_hints(fn)
+		annotations = typing.get_type_hints(fn)								# receives a normal dictionary
 		_signature = inspect.signature(fn)
-		#pprint.pprint(_signature.parameters)
-		#pprint.pprint(dir(fn))
-		#print(signature._return_annotation)
+		_signature_parameters = _signature.parameters						# receives an ordered dictionary
+		_signature_return_annotation = _signature.return_annotation			# receives a type annotation structure
+
+		if bDebugComp:
+			print("@@>> wrapping function " + fn.__qualname__ + "(..) with checkFunctionSignature() ...")
+			for ak, av in annotations.items():
+				print("\t@@>> Annotation for " + repr(ak) + ": " + str(av))
+			for sk, sv in _signature_parameters.items():
+				print("\t@@>> Signature parameter for " + repr(sk) + ": " + repr(sv))
+				_debug_dumpObj("\t\t", sv, names = ["annotation", "default", "kind"])
+				# parameters are:
+				#	str sv.name				-- the name of the argument
+				#	any sv.annotation		-- the type annotation structure associated with this argument (or inspect._empty if not set)
+				#	obj sv.default			-- the defautl value (or inspect._empty if not set)
+			print("\t@@>> Return annotation: " + str(_signature_return_annotation))
 
 		# variables to fill during compile phase
 		_paramCheckers = {}
@@ -376,22 +449,27 @@ def checkFunctionSignature(bDebug:bool = False, logDescend:str = None):
 
 		outWarnList = []			# NOTE: we reuse this object for performance reasons
 		for k, t in _signature._parameters.items():
-			#print("\t", k, "=", pprint.pformat(t))
-			#print("\t" + str(dir(t)))
-			#print("\t\tname=" + repr(t.name))
-			#print("\t\tanno=" + repr(t.annotation))
-			c = _compile_checking(k, _getTypeDescr(t), t.annotation, outWarnList)
-			if bDebug and outWarnList:
-				for entry in outWarnList:
-					print("WARNING: " + fn.__qualname__ + "(), param " + repr(t.name) + " : " + entry)
-				outWarnList.clear()
+			c = _compile_checking(k, _getTypeDescr(t), t.annotation, t.default, outWarnList)
+			if bDebugComp:
+				if c is not None:
+					print("\t@@>> Signature parameter compilation for " + repr(k) + ":")
+					c.dump("\t\t|\t")
+			if bDebug:
+				if outWarnList:
+					for entry in outWarnList:
+						print("WARNING: " + fn.__qualname__ + "(), param " + repr(t.name) + " : " + entry)
+					outWarnList.clear()
 			if c is not None:
 				_paramCheckers[k] = c
 			#print("paramCheckers[" + k + "] =", c)
 
 		if _signature._return_annotation != inspect._empty:
 			outWarnList = []
-			_returnChecker = _compile_checking(None, _getTypeDescr(_signature._return_annotation), _signature._return_annotation, outWarnList)
+			_returnChecker = _compile_checking(None, _getTypeDescr(_signature._return_annotation), _signature._return_annotation, inspect._empty, outWarnList)
+			if bDebugComp:
+				if _returnChecker is not None:
+					print("\t@@>> Signature parameter compilation for returned values:")
+					_returnChecker.dump("\t\t|\t")
 		#print("returnChecker =", repr(returnChecker.sType))
 		_bIsMethod = "self" in _paramCheckers
 
@@ -423,7 +501,7 @@ def checkFunctionSignature(bDebug:bool = False, logDescend:str = None):
 			# check arguments. delay raising of errors to print all error messages before raising an exception.
 
 			if bDebug:
-				print("Function/method: " + fn.__qualname__ + "(..)")
+				print("@@>> Invoking function/method: " + fn.__qualname__ + "(..)")
 
 				err = None
 				for k, v in boundedArgs.arguments.items():

@@ -1,2 +1,9 @@
-* 2021-09-27: Complete reimplementation. Now compiling type checking in advance.
-* 2021-11-14: Small improvement for automatic log descending
+* 2021-09-27
+	* Complete reimplementation. Now compiling type checking in advance.
+
+* 2021-11-14
+	* Small improvement for automatic log descending
+
+* 2021-12-01
+	* Added: Automatic tolerance of None values if None is specified as default value
+
