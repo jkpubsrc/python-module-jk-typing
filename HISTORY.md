@@ -7,3 +7,8 @@
 * 2021-12-01
 	* Added: Automatic tolerance of None values if None is specified as default value
 
+* 2021-12-04
+	* Refactoring
+	* Fixed: Type checking for generic tuples
+	* Added: Unit tests
+

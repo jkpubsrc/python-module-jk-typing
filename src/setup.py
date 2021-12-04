@@ -35,8 +35,9 @@ setup(
 	name = "jk_typing",
 	packages = [
 		"jk_typing",
+		"jk_typing.checking",
 	],
-	version = "0.2021.12.1",
+	version = "0.2021.12.4",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",

@@ -21,7 +21,7 @@
 		"license": "Apache2",
 		"name": "jk_typing",
 		"packageClass": "python-module",
-		"version": "0.2021.12.1"
+		"version": "0.2021.12.4"
 	},
 	"repositories": [
 		{
@@ -45,7 +45,8 @@
 		"extra_binary_files": [],
 		"extra_data_files": [],
 		"packages": [
-			"jk_typing"
+			"jk_typing",
+			"jk_typing.checking"
 		]
 	}
 }

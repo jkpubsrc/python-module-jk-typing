@@ -6,6 +6,11 @@ import typing
 import inspect
 import pprint
 
+from .checking.AbstractCTNode import AbstractCTNode
+from .checking.CheckTypeCompiler import CheckTypeCompiler
+
+
+
 
 
 """
@@ -22,9 +27,9 @@ def __checkUnion(value, typeSpecs:list):
 #_type_checking_enabled = True
 
 if (sys.version_info.major < 3) or (
-	(sys.version_info.major == 3) and (sys.version_info.minor < 5)):
+	(sys.version_info.major == 3) and (sys.version_info.minor <= 6)):
 	# older python implementation are not yet mature enough.
-	raise Exception("Python versions below 3.5 are not supported!")
+	raise Exception("Python versions below 3.6 are not supported!")
 
 
 
@@ -45,239 +50,6 @@ def isTypeCheckingEnabled() -> bool:
 #
 """
 
-
-
-
-class __CheckIfNone(object):
-	def __init__(self, argName:str, sType:str):
-		self.argName = argName
-		self.sType = sType
-	#
-	def __call__(self, value) -> bool:
-		return value is None
-	#
-	def dump(self, prefix:str):
-		print(prefix + "__CheckIfNone<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + ")>")
-	#
-#
-
-class __CheckAlwaysTrue(object):
-	def __init__(self, argName:str, sType:str):
-		self.argName = argName
-		self.sType = sType
-	#
-	def __call__(self, value) -> bool:
-		return True
-	#
-	def dump(self, prefix:str):
-		print(prefix + "__CheckAlwaysTrue<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + ")>")
-	#
-#
-
-class __CheckIfType(object):
-	def __init__(self, argName:str, sType:str, expectedType):
-		self.argName = argName
-		self.sType = sType
-		self.__expectedType = expectedType
-	#
-	def __call__(self, value) -> bool:
-		if not isinstance(value, self.__expectedType):
-			return False
-		return True
-	#
-	def dump(self, prefix:str):
-		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + "\t__expectedType=" + repr(self.__expectedType))
-		print(prefix + ")>")
-	#
-#
-
-class __CheckIfType__CheckItems(object):
-	def __init__(self, argName:str, sType:str, expectedType, nestedCheckFunc):
-		self.argName = argName
-		self.sType = sType
-		self.__expectedType = expectedType
-		self.__nestedCheckFunc = nestedCheckFunc
-	#
-	def __call__(self, value) -> bool:
-		if not isinstance(value, self.__expectedType):
-			return False
-		for v in value:
-			if not self.__nestedCheckFunc.__call__(v):
-				return False
-		return True
-	#
-	def dump(self, prefix:str):
-		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + "\t__expectedType=" + repr(self.__expectedType))
-		print(prefix + "\t__nestedCheckFunc=")
-		self.__nestedCheckFunc.dump(prefix + "\t\t")
-		print(prefix + ")>")
-	#
-#
-
-class __CheckIfDict(object):
-	def __init__(self, argName:str, sType:str, keyCheckFunc, valueCheckFunc):
-		self.argName = argName
-		self.sType = sType
-		self.__keyCheckFunc = keyCheckFunc
-		self.__valueCheckFunc = valueCheckFunc
-	#
-	def __call__(self, value) -> bool:
-		if not isinstance(value, dict):
-			return False
-		for k, v in value.items():
-			if not self.__keyCheckFunc.__call__(k):
-				return False
-			if not self.__valueCheckFunc.__call__(v):
-				return False
-		return True
-	#
-	def dump(self, prefix:str):
-		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + "\t__keyCheckFunc=")
-		self.__keyCheckFunc.dump(prefix + "\t\t")
-		print(prefix + "\t__valueCheckFunc=")
-		self.__valueCheckFunc.dump(prefix + "\t\t")
-		print(prefix + ")>")
-	#
-#
-
-class __CheckIfType__Union(object):
-	def __init__(self, argName:str, sType:str, nestedCheckFuncs):
-		self.argName = argName
-		self.sType = sType
-		self.__nestedCheckFuncs = nestedCheckFuncs
-	#
-	def __call__(self, value) -> bool:
-		for f in self.__nestedCheckFuncs:
-			if f.__call__(value):
-				return True
-		return False
-	#
-	def dump(self, prefix:str):
-		print(prefix + "__CheckIfType__CheckItems<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + "\t__nestedCheckFuncs=[")
-		for x in self.__nestedCheckFuncs:
-			x.dump(prefix + "\t\t")
-		print(prefix + "\t]")
-		print(prefix + ")>")
-	#
-#
-
-
-
-
-
-def _0_compile_checking(argName:typing.Union[str,None], sType:str, typeSpec, outWarnList:list):
-	if typeSpec is None:
-		# void
-		raise Exception("Can't be void ...")
-
-	elif typeSpec == inspect._empty:
-		# nothing is specified
-		return __CheckAlwaysTrue(argName, sType)
-
-	elif isinstance(typeSpec, typing._GenericAlias):
-		# generic
-
-		if typeSpec._name == "List":
-			return __CheckIfType__CheckItems(argName, sType, list, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Tuple":
-			return __CheckIfType__CheckItems(argName, sType, tuple, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Set":
-			return __CheckIfType__CheckItems(argName, sType, set, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "FrozenSet":
-			return __CheckIfType__CheckItems(argName, sType, frozenset, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Deque":
-			return __CheckIfType__CheckItems(argName, sType, deque, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Dict":
-			return __CheckIfDict(argName, sType, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList), _0_compile_checking(argName, sType, typeSpec.__args__[1], outWarnList))
-
-		elif typeSpec.__origin__ == typing.Union:
-			return __CheckIfType__Union(argName, sType, [ _0_compile_checking(argName, sType, t, outWarnList) for t in typeSpec.__args__ ])
-
-		else:
-			if outWarnList is not None:
-				outWarnList.append("Can't check this type: " + repr(typeSpec))
-			return __CheckAlwaysTrue(argName, sType)
-
-	else:
-		# regular type
-		return __CheckIfType(argName, sType, typeSpec)
-#
-
-
-
-#
-# Compile to value checking logic and return it.
-#
-# @param	str argName			(optional) Argument name. If none is specified, this should be a return value.
-# @param	str sType			(required) A string representation of the return type (for output).
-# @param	* typeSpec			(required) A type specification object as returned by inspect
-# @param	any defaultValue	(required) The default value. If it is (null) an additional check for empty data is added. Specify `inspect._empty` if not defined.
-# @param	str[] outWarnList	(required) A list that receives warning messages.
-# @param	Returns a callable (based on a hierarchical object model) that performs the type checking or (null) if no type checking should be performed
-#
-def _compile_checking(argName:typing.Union[str,None], sType:str, typeSpec, defaultValue, outWarnList:list):
-	if typeSpec is None:
-		# void
-		return __CheckIfNone(argName, sType)
-
-	elif typeSpec == inspect._empty:
-		# nothing is specified
-		return None
-
-	elif isinstance(typeSpec, typing._GenericAlias):
-		# generic
-
-		if typeSpec._name == "List":
-			ret = __CheckIfType__CheckItems(argName, sType, list, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Tuple":
-			ret = __CheckIfType__CheckItems(argName, sType, tuple, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Set":
-			ret = __CheckIfType__CheckItems(argName, sType, set, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "FrozenSet":
-			ret = __CheckIfType__CheckItems(argName, sType, frozenset, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Deque":
-			ret = __CheckIfType__CheckItems(argName, sType, deque, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList))
-
-		elif typeSpec._name == "Dict":
-			ret = __CheckIfDict(argName, sType, _0_compile_checking(argName, sType, typeSpec.__args__[0], outWarnList), _0_compile_checking(argName, sType, typeSpec.__args__[1], outWarnList))
-
-		elif typeSpec.__origin__ == typing.Union:
-			ret = __CheckIfType__Union(argName, sType, [ _0_compile_checking(argName, sType, t, outWarnList) for t in typeSpec.__args__ ])
-
-		else:
-			if outWarnList is not None:
-				outWarnList.append("Can't check this type: " + repr(typeSpec))
-			ret = __CheckAlwaysTrue(argName, sType)
-
-		if defaultValue is None:
-			ret = __CheckIfType__Union(argName, sType, [ ret, __CheckIfNone(argName, sType) ])
-
-		return ret
-
-	else:
-		# regular type
-		ret = __CheckIfType(argName, sType, typeSpec)
-
-		if defaultValue is None:
-			ret = __CheckIfType__Union(argName, sType, [ ret, __CheckIfNone(argName, sType) ])
-
-		return ret
-#
 
 
 
@@ -416,7 +188,7 @@ def _debug_dumpObj(prefix:str, someObj, bSkipUnderscores:bool = True, names:list
 
 
 # this is the annotation wrapper that receives arguments and returns the function that does the wrapping
-def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDescend:str = None):
+def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDescend:str = None, logLevel = None):
 	assert isinstance(bDebug, bool)
 	assert isinstance(bDebugComp, bool)
 
@@ -430,11 +202,13 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 
 		if bDebugComp:
 			print("@@>> wrapping function " + fn.__qualname__ + "(..) with checkFunctionSignature() ...")
+			print("\t@@>> Annotations:")
 			for ak, av in annotations.items():
-				print("\t@@>> Annotation for " + repr(ak) + ": " + str(av))
+				print("\t\t@@>> Annotation for " + repr(ak) + ": " + str(av))
+			print("\t@@>> Signature:")
 			for sk, sv in _signature_parameters.items():
-				print("\t@@>> Signature parameter for " + repr(sk) + ": " + repr(sv))
-				_debug_dumpObj("\t\t", sv, names = ["annotation", "default", "kind"])
+				print("\t\t@@>> Signature parameter for " + repr(sk) + ": " + repr(sv))
+				_debug_dumpObj("\t\t\t", sv, names = ["annotation", "default", "kind"])
 				# parameters are:
 				#	str sv.name				-- the name of the argument
 				#	any sv.annotation		-- the type annotation structure associated with this argument (or inspect._empty if not set)
@@ -449,7 +223,7 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 
 		outWarnList = []			# NOTE: we reuse this object for performance reasons
 		for k, t in _signature._parameters.items():
-			c = _compile_checking(k, _getTypeDescr(t), t.annotation, t.default, outWarnList)
+			c = CheckTypeCompiler.compile(k, _getTypeDescr(t), t.annotation, t.default, outWarnList, bDebugComp)
 			if bDebugComp:
 				if c is not None:
 					print("\t@@>> Signature parameter compilation for " + repr(k) + ":")
@@ -465,7 +239,7 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 
 		if _signature._return_annotation != inspect._empty:
 			outWarnList = []
-			_returnChecker = _compile_checking(None, _getTypeDescr(_signature._return_annotation), _signature._return_annotation, inspect._empty, outWarnList)
+			_returnChecker = CheckTypeCompiler.compile(None, _getTypeDescr(_signature._return_annotation), _signature._return_annotation, inspect._empty, outWarnList, bDebugComp)
 			if bDebugComp:
 				if _returnChecker is not None:
 					print("\t@@>> Signature parameter compilation for returned values:")
@@ -479,11 +253,17 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 		if logDescend:
 			_pcLog = _paramCheckers["log"]
 			if _pcLog:
-				_tmp = _pcLog.sType.split(".")
-				if (_tmp[0] == "jk_logging") and (_tmp[-1].endswith("Logger")):
-					_logDescend = logDescend
+				#_tmp = _pcLog.sType.split(".")
+				#if (_tmp[0] == "jk_logging") and (_tmp[-1].endswith("Logger")):
+				#	_logDescend = logDescend
+				_logDescend = logDescend
 			if bDebug and (_logDescend is None):
 				print("WARNING: " + fn.__qualname__ + "() has no suitable parameter 'log' for log descent!")
+			if bDebug:
+				print("@@>> Using log descend.")
+		else:
+			if bDebug:
+				print("@@>> Not using log descend.")
 
 		# ----
 
@@ -533,12 +313,17 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 			# invoke the function
 
 			if _logDescend:
-				_baLog = boundedArgs.arguments.get("log")
-				if _baLog is not None:
+				_baLogger = boundedArgs.arguments.get("log")
+				if _baLogger is not None:
 					# a 'log' argument is a) expected and b) has been specified; this is the normal situation => descent
-					with _baLog.descend(_logDescend.format(**boundedArgs.arguments)) as log2:
-						boundedArgs.arguments["log"] = log2
-						ret = fn(*boundedArgs.args, **boundedArgs.kwargs)
+					if logLevel is None:
+						with _baLogger.descend(_logDescend.format(**boundedArgs.arguments)) as log2:
+							boundedArgs.arguments["log"] = log2
+							ret = fn(*boundedArgs.args, **boundedArgs.kwargs)
+					else:
+						with _baLogger.descend(_logDescend.format(**boundedArgs.arguments), logLevel=logLevel) as log2:
+							boundedArgs.arguments["log"] = log2
+							ret = fn(*boundedArgs.args, **boundedArgs.kwargs)
 				else:
 					# a 'log' argument is a) expected and b) but has been specified; this will now result in an exception raise (= programming error by the caller)
 					ret = fn(*args, **kwargs)
