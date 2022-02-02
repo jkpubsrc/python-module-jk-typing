@@ -223,6 +223,7 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 
 		outWarnList = []			# NOTE: we reuse this object for performance reasons
 		for k, t in _signature._parameters.items():
+			assert isinstance(t, inspect.Parameter)
 			c = CheckTypeCompiler.compile(k, _getTypeDescr(t), t.annotation, t.default, outWarnList, bDebugComp)
 			if bDebugComp:
 				if c is not None:

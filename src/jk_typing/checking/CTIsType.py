@@ -1,6 +1,10 @@
 
 
+import typing
+
 from .AbstractCTNode import AbstractCTNode
+
+
 
 
 
@@ -15,7 +19,13 @@ class CTIsType(AbstractCTNode):
 	#
 	# Constructor method.
 	#
-	def __init__(self, argName:str, sType:str, bDebug:bool, expectedType):
+	def __init__(self, argName:typing.Union[str,None], sType:str, bDebug:bool, expectedType):
+		if argName is not None:
+			assert isinstance(argName, str)
+		assert isinstance(sType, str)
+		assert isinstance(bDebug, bool)
+		assert isinstance(expectedType, type) or isinstance(expectedType, tuple)
+
 		self.argName = argName
 		self.sType = sType
 		self.bDebug = bDebug

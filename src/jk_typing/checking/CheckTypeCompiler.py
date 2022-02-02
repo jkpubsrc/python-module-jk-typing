@@ -38,7 +38,14 @@ class CheckTypeCompiler(object):
 	################################################################################################################################
 
 	@staticmethod
-	def _0_compile_checking(argName:typing.Union[str,None], sType:str, typeSpec, outWarnList:list, bEnableDebugging:bool):
+	def _0_compile_checking(
+			argName:typing.Union[str,None],
+			sType:str,
+			typeSpec,
+			outWarnList:list,
+			bEnableDebugging:bool,
+		):
+
 		if typeSpec is None:
 			# void
 			raise Exception("Can't be void ...")
@@ -50,6 +57,11 @@ class CheckTypeCompiler(object):
 				sType,
 				bEnableDebugging,
 			)
+
+		elif isinstance(typeSpec, str):
+			# a string based type specified; we can't handle this as we simply don't have any information about the type;
+			outWarnList.append("string based type specification notsupported: " + repr(typeSpec))
+			return None
 
 		elif isinstance(typeSpec, typing._GenericAlias):
 			# generic
@@ -180,6 +192,11 @@ class CheckTypeCompiler(object):
 
 		elif typeSpec == inspect._empty:
 			# nothing is specified
+			return None
+
+		elif isinstance(typeSpec, str):
+			# a string based type specified; we can't handle this as we simply don't have any information about the type;
+			outWarnList.append("string based type specification notsupported: " + repr(typeSpec))
 			return None
 
 		elif isinstance(typeSpec, typing._GenericAlias):
