@@ -12,4 +12,4 @@ from .CheckTypeCompiler import CheckTypeCompiler
 
 
 
-__version__ = "0.2022.2.2"
+__version__ = "0.2022.2.10"

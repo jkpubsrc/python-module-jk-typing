@@ -37,7 +37,7 @@ setup(
 		"jk_typing",
 		"jk_typing.checking",
 	],
-	version = "0.2022.2.2",
+	version = "0.2022.2.10",
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type="text/markdown",

@@ -24,7 +24,8 @@ class CTIsType(AbstractCTNode):
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)
 		assert isinstance(bDebug, bool)
-		assert isinstance(expectedType, type) or isinstance(expectedType, tuple)
+		# NOTE: In python 3.9 an object of typing.Callable is not a type - for what whatever reasons
+		assert isinstance(expectedType, type) or isinstance(expectedType, tuple) or isinstance(expectedType, typing.Callable)
 
 		self.argName = argName
 		self.sType = sType
