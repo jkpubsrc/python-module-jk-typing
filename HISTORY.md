@@ -18,3 +18,7 @@
 * 2022-02-10
 	* Fixed: Bug asserting Callables introduced with Python 3.9
 
+* 2022-02-27
+	* Added: Support for 'typing.Any'
+
+

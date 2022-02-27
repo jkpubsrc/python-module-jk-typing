@@ -50,7 +50,7 @@ class CheckTypeCompiler(object):
 			# void
 			raise Exception("Can't be void ...")
 
-		elif typeSpec == inspect._empty:
+		elif (typeSpec == inspect._empty) or (typeSpec == typing.Any):
 			# nothing is specified
 			return CTAlwaysTrue(
 				argName,

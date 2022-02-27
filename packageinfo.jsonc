@@ -12,7 +12,7 @@
 			}
 		],
 		"description": "This module provides capabilities for type checking function arguments. (NOTE: A full type check with this module is not possible, since this is fundamentally not possible due to limitiations of Python itself.)",
-		"development_status": "beta",
+		"development_status": "stable",
 		"keywords": [
 			"typing",
 			"type-checking"
@@ -21,7 +21,7 @@
 		"license": "Apache2",
 		"name": "jk_typing",
 		"packageClass": "python-module",
-		"version": "0.2022.2.10"
+		"version": "0.2022.2.27"
 	},
 	"repositories": [
 		{
