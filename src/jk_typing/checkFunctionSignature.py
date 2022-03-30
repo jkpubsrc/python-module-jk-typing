@@ -357,6 +357,7 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 
 		_wrapper.orgName = fn.__name__
 		_wrapper.orgQualName = fn.__qualname__
+		_wrapper.orgSignature = _signature
 		return _wrapper
 		#return _FunctionWrapper(fn, signature, paramCheckers, returnChecker, bDebug)
 	#

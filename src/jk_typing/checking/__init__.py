@@ -1,4 +1,3 @@
-﻿
 
 
 
@@ -10,6 +9,3 @@ from .CheckTypeCompiler import CheckTypeCompiler
 
 
 
-
-
-__version__ = "0.2022.2.27"

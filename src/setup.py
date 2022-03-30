@@ -19,7 +19,7 @@ setup(
 	author = "Jürgen Knauth",
 	author_email = "pubsrc@binary-overflow.de",
 	classifiers = [
-		"Development Status :: 4 - Beta",
+		"Development Status :: 5 - Production/Stable",
 		"License :: OSI Approved :: Apache Software License",
 		"Programming Language :: Python :: 3",
 	],
@@ -33,12 +33,18 @@ setup(
 	],
 	license = "Apache2",
 	name = "jk_typing",
+	package_data = {
+		"": [
+		],
+	},
 	packages = [
 		"jk_typing",
 		"jk_typing.checking",
 	],
-	version = "0.2022.2.27",
+	scripts = [
+	],
+	version = '0.2022.3.30',
 	zip_safe = False,
 	long_description = readme(),
-	long_description_content_type="text/markdown",
+	long_description_content_type = "text/markdown",
 )
