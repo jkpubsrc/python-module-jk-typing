@@ -1,5 +1,6 @@
 
 
+import typing
 import inspect
 
 
@@ -33,7 +34,16 @@ class AbstractCTNode(object):
 		raise NotImplementedError()
 	#
 
-	def dump(self, prefix:str):
+	def dump(self, prefix:str = None, printFunc:typing.Callable = None):
+		if prefix is None:
+			prefix = ""
+		if printFunc is None:
+			printFunc = print
+
+		self._dump(prefix, printFunc)
+	#
+
+	def _dump(self, prefix:str, printFunc:typing.Callable):
 		raise NotImplementedError()
 	#
 

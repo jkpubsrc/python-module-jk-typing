@@ -1,5 +1,7 @@
 
 
+import typing
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -15,10 +17,17 @@ class CTIsCallable(AbstractCTNode):
 	#
 	# Constructor method.
 	#
-	def __init__(self, argName:str, sType:str, bDebug:bool):
+	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int]):
+		if argName is not None:
+			assert isinstance(argName, str)
+		assert isinstance(sType, str)
+		assert isinstance(nDebug, (bool, int))
+
+		# ----
+
 		self.argName = argName
 		self.sType = sType
-		self.bDebug = bDebug
+		self.__nDebug = nDebug
 	#
 
 	################################################################################################################################
@@ -37,12 +46,14 @@ class CTIsCallable(AbstractCTNode):
 		if callable(value):
 			return True
 		else:
-			self._printCodeLocation(__file__)
+			if self.__nDebug:
+				self._printCodeLocation(__file__)
 			return False
 	#
-	def dump(self, prefix:str):
-		print(prefix + "CTIsCallable<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + ")>")
+
+	def _dump(self, prefix:str, printFunc:typing.Callable):
+		printFunc(prefix + "CTIsCallable<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		printFunc(prefix + ")>")
 	#
 
 #

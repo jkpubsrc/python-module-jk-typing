@@ -24,7 +24,7 @@ setup(
 		"Programming Language :: Python :: 3",
 	],
 	description = "This module provides capabilities for type checking function arguments. (NOTE: A full type check with this module is not possible, since this is fundamentally not possible due to limitiations of Python itself.)",
-	include_package_data = False,
+	include_package_data = True,
 	install_requires = [
 	],
 	keywords = [
@@ -43,7 +43,7 @@ setup(
 	],
 	scripts = [
 	],
-	version = '0.2022.3.30',
+	version = '0.2023.3.14',
 	zip_safe = False,
 	long_description = readme(),
 	long_description_content_type = "text/markdown",

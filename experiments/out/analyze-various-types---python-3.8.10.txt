@@ -1,0 +1,44 @@
+ Type Specification                           type(~)                                  __args__                                    __origin__                           _name       _special 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ typing.Any                                   <class 'typing._SpecialForm'>            -                                           -                                    Any         -        
+ typing.Tuple                                 <class 'typing._VariadicGenericAlias'>   ()                                          <class 'tuple'>                      Tuple       True     
+ <class 'NoneType'>                           <class 'type'>                           -                                           -                                    -           -        
+ <class 'inspect._empty'>                     <class 'type'>                           -                                           -                                    -           -        
+ <class 'bool'>                               <class 'type'>                           -                                           -                                    -           -        
+ <class 'int'>                                <class 'type'>                           -                                           -                                    -           -        
+ <class 'float'>                              <class 'type'>                           -                                           -                                    -           -        
+ <class 'str'>                                <class 'type'>                           -                                           -                                    -           -        
+ <class 'list'>                               <class 'type'>                           -                                           -                                    -           -        
+ <class 'tuple'>                              <class 'type'>                           -                                           -                                    -           -        
+ <class 'set'>                                <class 'type'>                           -                                           -                                    -           -        
+ <class 'frozenset'>                          <class 'type'>                           -                                           -                                    -           -        
+ <class 'dict'>                               <class 'type'>                           -                                           -                                    -           -        
+ <class 'collections.deque'>                  <class 'type'>                           -                                           -                                    -           -        
+ typing.Sequence                              <class 'typing._GenericAlias'>           (+T_co,)                                    <class 'collections.abc.Sequence'>   Sequence    True     
+ typing.Sequence[str]                         <class 'typing._GenericAlias'>           (<class 'str'>,)                            <class 'collections.abc.Sequence'>   Sequence    False    
+ typing.List                                  <class 'typing._GenericAlias'>           (~T,)                                       <class 'list'>                       List        True     
+ typing.List[int]                             <class 'typing._GenericAlias'>           (<class 'int'>,)                            <class 'list'>                       List        False    
+ typing.List[float]                           <class 'typing._GenericAlias'>           (<class 'float'>,)                          <class 'list'>                       List        False    
+ typing.List[str]                             <class 'typing._GenericAlias'>           (<class 'str'>,)                            <class 'list'>                       List        False    
+ typing.Tuple[int]                            <class 'typing._GenericAlias'>           (<class 'int'>,)                            <class 'tuple'>                      Tuple       False    
+ typing.Tuple[int, ...]                       <class 'typing._GenericAlias'>           (<class 'int'>, Ellipsis)                   <class 'tuple'>                      Tuple       False    
+ typing.Tuple[float]                          <class 'typing._GenericAlias'>           (<class 'float'>,)                          <class 'tuple'>                      Tuple       False    
+ typing.Tuple[float, ...]                     <class 'typing._GenericAlias'>           (<class 'float'>, Ellipsis)                 <class 'tuple'>                      Tuple       False    
+ typing.Tuple[str]                            <class 'typing._GenericAlias'>           (<class 'str'>,)                            <class 'tuple'>                      Tuple       False    
+ typing.Tuple[str, ...]                       <class 'typing._GenericAlias'>           (<class 'str'>, Ellipsis)                   <class 'tuple'>                      Tuple       False    
+ typing.Tuple[str, bool]                      <class 'typing._GenericAlias'>           (<class 'str'>, <class 'bool'>)             <class 'tuple'>                      Tuple       False    
+ typing.Set[int]                              <class 'typing._GenericAlias'>           (<class 'int'>,)                            <class 'set'>                        Set         False    
+ typing.Set[float]                            <class 'typing._GenericAlias'>           (<class 'float'>,)                          <class 'set'>                        Set         False    
+ typing.Set[str]                              <class 'typing._GenericAlias'>           (<class 'str'>,)                            <class 'set'>                        Set         False    
+ typing.FrozenSet[int]                        <class 'typing._GenericAlias'>           (<class 'int'>,)                            <class 'frozenset'>                  FrozenSet   False    
+ typing.FrozenSet[float]                      <class 'typing._GenericAlias'>           (<class 'float'>,)                          <class 'frozenset'>                  FrozenSet   False    
+ typing.FrozenSet[str]                        <class 'typing._GenericAlias'>           (<class 'str'>,)                            <class 'frozenset'>                  FrozenSet   False    
+ typing.Dict[str, int]                        <class 'typing._GenericAlias'>           (<class 'str'>, <class 'int'>)              <class 'dict'>                       Dict        False    
+ typing.Dict[str, float]                      <class 'typing._GenericAlias'>           (<class 'str'>, <class 'float'>)            <class 'dict'>                       Dict        False    
+ typing.Dict[str, str]                        <class 'typing._GenericAlias'>           (<class 'str'>, <class 'str'>)              <class 'dict'>                       Dict        False    
+ typing.Dict[str, typing.Any]                 <class 'typing._GenericAlias'>           (<class 'str'>, typing.Any)                 <class 'dict'>                       Dict        False    
+ typing.Dict[str, typing.Union[int, float]]   <class 'typing._GenericAlias'>           (<class 'str'>, typing.Union[int, float])   <class 'dict'>                       Dict        False    
+ typing.Deque                                 <class 'typing._GenericAlias'>           (~T,)                                       <class 'collections.deque'>          Deque       True     
+ typing.Deque[str]                            <class 'typing._GenericAlias'>           (<class 'str'>,)                            <class 'collections.deque'>          Deque       False    
+ typing.Union[int, float]                     <class 'typing._GenericAlias'>           (<class 'int'>, <class 'float'>)            typing.Union                         None        False    
+ typing.Union[str, bool]                      <class 'typing._GenericAlias'>           (<class 'str'>, <class 'bool'>)             typing.Union                         None        False    

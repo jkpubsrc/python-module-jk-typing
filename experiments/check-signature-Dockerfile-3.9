@@ -1,0 +1,15 @@
+FROM python:3.8-alpine
+
+RUN mkdir /app
+COPY check-signature-old.py /app/
+
+COPY _temp /appinst/
+RUN cd /appinst && pip install .
+
+RUN cd /app
+
+WORKDIR /app
+
+CMD [ "python", "/app/check-signature-old.py" ]
+
+

@@ -1,10 +1,9 @@
 
 
-from collections import deque
+import collections
 import sys
 import typing
 import inspect
-import pprint
 
 from .checking.AbstractCTNode import AbstractCTNode
 from .checking.CheckTypeCompiler import CheckTypeCompiler
@@ -112,7 +111,7 @@ def _checkType(value, typeSpec, indent:int):
 			return True
 
 		elif typeSpec._name == "Deque":
-			if not isinstance(value, deque):
+			if not isinstance(value, collections.deque):
 				return False
 			for v in value:
 				if not _checkType(v, typeSpec.__args__[0], indent+1):
@@ -187,14 +186,24 @@ def _debug_dumpObj(prefix:str, someObj, bSkipUnderscores:bool = True, names:list
 #
 
 
+#
 # this is the annotation wrapper that receives arguments and returns the function that does the wrapping
-def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDescend:str = None, logLevel = None):
+#
+# @param		bool bDebug							(optional) Enable debugging output at evaluation time.
+# @param		int|bool bDebugComp					(optional) Enable debugging output at compile time.
+# @param		str logDescend						(optional) Log descend message.
+# @param		jk_logging.EnumLoglevel logLevel	(optional) Modify the standard descend log level.
+# @param		bool bLogWithhold					(optional) Only log if a minimum log level of warning occurs.
+#
+def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int] = False, logDescend:str = None, logLevel = None, bLogWithhold:bool = False):
 	assert isinstance(bDebug, bool)
-	assert isinstance(bDebugComp, bool)
+	assert isinstance(bDebugComp, (bool, int))
+	assert isinstance(bLogWithhold, bool)
+
+	# ----
 
 	# this function is executed for every function definition
 	def _wrap_the_function(fn):
-		#print(fn)
 		annotations = typing.get_type_hints(fn)								# receives a normal dictionary
 		_signature = inspect.signature(fn)
 		_signature_parameters = _signature.parameters						# receives an ordered dictionary
@@ -240,7 +249,14 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 
 		if _signature._return_annotation != inspect._empty:
 			outWarnList = []
-			_returnChecker = CheckTypeCompiler.compile(None, _getTypeDescr(_signature._return_annotation), _signature._return_annotation, inspect._empty, outWarnList, bDebugComp)
+			_returnChecker = CheckTypeCompiler.compile(
+				None,											# argName
+				_getTypeDescr(_signature._return_annotation),	# sType
+				_signature._return_annotation,					# typeSpec
+				inspect._empty,									# defaultValue
+				outWarnList,									# outWarnList
+				bDebugComp										# nEnableDebugging
+			)
 			if bDebugComp:
 				if _returnChecker is not None:
 					print("\t@@>> Signature parameter compilation for returned values:")
@@ -317,14 +333,14 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:bool = False, logDesc
 				_baLogger = boundedArgs.arguments.get("log")
 				if _baLogger is not None:
 					# a 'log' argument is a) expected and b) has been specified; this is the normal situation => descent
-					if logLevel is None:
-						with _baLogger.descend(_logDescend.format(**boundedArgs.arguments)) as log2:
-							boundedArgs.arguments["log"] = log2
-							ret = fn(*boundedArgs.args, **boundedArgs.kwargs)
-					else:
-						with _baLogger.descend(_logDescend.format(**boundedArgs.arguments), logLevel=logLevel) as log2:
-							boundedArgs.arguments["log"] = log2
-							ret = fn(*boundedArgs.args, **boundedArgs.kwargs)
+
+					_baVerbose = boundedArgs.arguments.get("bVerbose")
+					bWithholdVerbose = _baVerbose if isinstance(_baVerbose, bool) else False
+
+					with _baLogger.descend(_logDescend.format(**boundedArgs.arguments), logLevel=logLevel, bWithhold=bLogWithhold, bWithholdVerbose=bWithholdVerbose) as log2:
+						boundedArgs.arguments["log"] = log2
+						ret = fn(*boundedArgs.args, **boundedArgs.kwargs)
+
 				else:
 					# a 'log' argument is a) expected and b) but has been specified; this will now result in an exception raise (= programming error by the caller)
 					ret = fn(*args, **kwargs)

@@ -1,0 +1,73 @@
+
+
+Python: 3.10.8 (main, Nov 29 2022, 21:20:59) [GCC 12.2.1 20220924]
+
+
+@@>> wrapping function someFunction(..) with checkFunctionSignature() ...
+	@@>> Annotations:
+		@@>> Annotation for 'vIntOrFloat1': typing.Union[int, float]
+		@@>> Annotation for 'vIntOrFloat2': int | float
+	@@>> Signature:
+		@@>> Signature parameter for 'vIntOrFloat1': <Parameter "vIntOrFloat1: Union[int, float]">
+			|	annotation: typing.Union[int, float]
+			|	default: <class 'inspect._empty'>
+			|	kind: POSITIONAL_OR_KEYWORD
+		@@>> Signature parameter for 'vIntOrFloat2': <Parameter "vIntOrFloat2: int | float">
+			|	annotation: int | float
+			|	default: <class 'inspect._empty'>
+			|	kind: POSITIONAL_OR_KEYWORD
+	@@>> Return annotation: <class 'inspect._empty'>
+--
+@@ <class 'typing._UnionGenericAlias'>
+@@ typing.Union[int, float]
+@@ nEnableDebugging = 2
+@@ _name           None
+@@ __origin__      typing.Union
+@@ __args__        (<class 'int'>, <class 'float'>)
+@@ _inst           True
+@@ __parameters__  ()
+--
+@@ <class 'type'>
+@@ <class 'int'>
+@@ nEnableDebugging = 2
+--
+@@ <class 'type'>
+@@ <class 'float'>
+@@ nEnableDebugging = 2
+	@@>> Signature parameter compilation for 'vIntOrFloat1':
+		|	CTIsType__Union<( argName='vIntOrFloat1', sType='Union[int, float]'
+		|		__nestedAlternativeCheckFuncs=[
+		|			CTIsType<( argName='vIntOrFloat1', sType='Union[int, float]'
+		|				__expectedType=<class 'int'>
+		|			)>
+		|			CTIsType<( argName='vIntOrFloat1', sType='Union[int, float]'
+		|				__expectedType=<class 'float'>
+		|			)>
+		|		]
+		|	)>
+--
+@@ <class 'types.UnionType'>
+@@ int | float
+@@ nEnableDebugging = 2
+@@ __args__        (<class 'int'>, <class 'float'>)
+@@ __parameters__  ()
+--
+@@ <class 'type'>
+@@ <class 'int'>
+@@ nEnableDebugging = 2
+--
+@@ <class 'type'>
+@@ <class 'float'>
+@@ nEnableDebugging = 2
+	@@>> Signature parameter compilation for 'vIntOrFloat2':
+		|	CTIsType__Union<( argName='vIntOrFloat2', sType='int | float'
+		|		__nestedAlternativeCheckFuncs=[
+		|			CTIsType<( argName='vIntOrFloat2', sType='int | float'
+		|				__expectedType=<class 'int'>
+		|			)>
+		|			CTIsType<( argName='vIntOrFloat2', sType='int | float'
+		|				__expectedType=<class 'float'>
+		|			)>
+		|		]
+		|	)>
+@@>> Not using log descend.

@@ -1,0 +1,29 @@
+__annotations__ :: type = <class 'dict'>
+	data = {'vFloatWithDefault': <class 'float'>,
+	  'vInt': <class 'int'>,
+	  'vStr': <class 'str'>,
+	  'xIntWithDefault': <class 'int'>,
+	  'xStrWithDefault': <class 'str'>}
+
+__code__ :: type = <class 'code'>
+	data = <code object someFunction at 0x7fc3bcfe55b0, file "./experiment.py", line 10>
+
+__defaults__ :: type = <class 'tuple'>
+	data = (12.345,)
+
+__dict__ :: type = <class 'dict'>
+	data = {}
+
+__kwdefaults__ :: type = <class 'dict'>
+	data = {'xIntWithDefault': 123, 'xStrWithDefault': 'foo'}
+
+__module__ :: type = <class 'str'>
+	data = '__main__'
+
+__name__ :: type = <class 'str'>
+	data = 'someFunction'
+
+__qualname__ :: type = <class 'str'>
+	data = 'someFunction'
+
+

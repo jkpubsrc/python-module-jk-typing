@@ -1,0 +1,124 @@
+
+
+Python: 3.10.8 (main, Nov 29 2022, 21:20:59) [GCC 12.2.1 20220924]
+
+
+
+
+parameters:
+	vIntOrFloat1:
+		<Parameter "vIntOrFloat1: Union[int, float]">
+		|	annotation = typing.Union[int, float]
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vIntOrFloat1'
+		>> annotation: <class 'typing._UnionGenericAlias'> : typing.Union[int, float]
+	vIntOrFloat2:
+		<Parameter "vIntOrFloat2: int | float">
+		|	annotation = int | float
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vIntOrFloat2'
+		>> annotation: <class 'types.UnionType'> : int | float
+	vStr:
+		<Parameter "vStr: str">
+		|	annotation = <class 'str'>
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vStr'
+		>> annotation: <class 'type'> : <class 'str'>
+	vList:
+		<Parameter "vList: list">
+		|	annotation = <class 'list'>
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vList'
+		>> annotation: <class 'type'> : <class 'list'>
+	vIntList:
+		<Parameter "vIntList: List[int]">
+		|	annotation = typing.List[int]
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vIntList'
+		>> annotation: <class 'typing._GenericAlias'> : typing.List[int]
+	vDict:
+		<Parameter "vDict: dict">
+		|	annotation = <class 'dict'>
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vDict'
+		>> annotation: <class 'type'> : <class 'dict'>
+	vStrIntDict:
+		<Parameter "vStrIntDict: Dict[str, int]">
+		|	annotation = typing.Dict[str, int]
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vStrIntDict'
+		>> annotation: <class 'typing._GenericAlias'> : typing.Dict[str, int]
+	vSet:
+		<Parameter "vSet: set">
+		|	annotation = <class 'set'>
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vSet'
+		>> annotation: <class 'type'> : <class 'set'>
+	vIntSet:
+		<Parameter "vIntSet: Set[int]">
+		|	annotation = typing.Set[int]
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vIntSet'
+		>> annotation: <class 'typing._GenericAlias'> : typing.Set[int]
+	vAny1:
+		<Parameter "vAny1">
+		|	annotation = <class 'inspect._empty'>
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vAny1'
+		>> annotation: <class 'type'> : <class 'inspect._empty'>
+	vAny2:
+		<Parameter "vAny2: Any">
+		|	annotation = typing.Any
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vAny2'
+		>> annotation: <class 'typing._SpecialForm'> : typing.Any
+	vFloatWithDefault:
+		<Parameter "vFloatWithDefault: float = 12.345">
+		|	annotation = <class 'float'>
+		|	default = 12.345
+		|	kind = <_ParameterKind.POSITIONAL_OR_KEYWORD: 1>
+		|	name = 'vFloatWithDefault'
+		>> annotation: <class 'type'> : <class 'float'>
+	args:
+		<Parameter "*args">
+		|	annotation = <class 'inspect._empty'>
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.VAR_POSITIONAL: 2>
+		|	name = 'args'
+		>> annotation: <class 'type'> : <class 'inspect._empty'>
+	xStrWithDefault:
+		<Parameter "xStrWithDefault: str = 'foo'">
+		|	annotation = <class 'str'>
+		|	default = 'foo'
+		|	kind = <_ParameterKind.KEYWORD_ONLY: 3>
+		|	name = 'xStrWithDefault'
+		>> annotation: <class 'type'> : <class 'str'>
+	xIntWithDefault:
+		<Parameter "xIntWithDefault: int = 123">
+		|	annotation = <class 'int'>
+		|	default = 123
+		|	kind = <_ParameterKind.KEYWORD_ONLY: 3>
+		|	name = 'xIntWithDefault'
+		>> annotation: <class 'type'> : <class 'int'>
+	kwargs:
+		<Parameter "**kwargs">
+		|	annotation = <class 'inspect._empty'>
+		|	default = <class 'inspect._empty'>
+		|	kind = <_ParameterKind.VAR_KEYWORD: 4>
+		|	name = 'kwargs'
+		>> annotation: <class 'type'> : <class 'inspect._empty'>
+
+
+return_annotation:
+	 typing.Any

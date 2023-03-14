@@ -10,7 +10,7 @@ from .AbstractCTNode import AbstractCTNode
 
 
 
-class CTIsType(AbstractCTNode):
+class CTIsType__Single_NewType(AbstractCTNode):
 
 	################################################################################################################################
 	## Constructor
@@ -24,19 +24,20 @@ class CTIsType(AbstractCTNode):
 	# @param		bool bDebug				(required) ???
 	# @param		* expectedType			(required) A type specification object as returned by inspect
 	#
-	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int], expectedType:typing.Union[type,typing.Callable]):
+	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int], expectedType:typing.Callable):
 		if argName is not None:
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)
 		assert isinstance(nDebug, (bool, int))
 		# NOTE: In python 3.9 an object of typing.Callable is not a type - for what whatever reasons
-		# print("{{{{", type(expectedType), "@@", expectedType, "}}}}")
-		assert isinstance(expectedType, (type,typing.Callable))
+		#print("{{{{", type(expectedType), "@@", expectedType, "}}}}")
+		#assert isinstance(expectedType, typing.Callable)
+		assert CTIsType__Single_NewType.isSingleNewType(expectedType)
 
 		self.argName = argName
 		self.sType = sType
 		self.__nDebug = nDebug
-		self.__expectedType = expectedType
+		self.__expectedTypeName = expectedType.__name__
 	#
 
 	################################################################################################################################
@@ -51,37 +52,38 @@ class CTIsType(AbstractCTNode):
 	## Public Methods
 	################################################################################################################################
 
-	def ____check_expectedTypeIsType(self, expectedType, value) -> bool:
-		if isinstance(value, expectedType):
+	@staticmethod
+	def isSingleNewType(expectedType) -> None:
+		if expectedType is None:
+			return False
+		
+		# python 3.8
+		if isinstance(expectedType, typing.Callable) and (expectedType.__module__ == "typing") and str(expectedType).startswith("<function NewType."):
 			return True
-		return False
-	#
 
-	def ____check_expectedTypeIsNewType(self, expectedType, value) -> bool:
-		expectedTypeStr = expectedType.__name__
-		presentedTypeStr = type(value).__name__
-		if presentedTypeStr == expectedTypeStr:
+		# python 3.10
+		if isinstance(expectedType, typing.Callable) and (expectedType.__class__ == typing.NewType):
 			return True
+
 		return False
 	#
 
 	def __call__(self, value) -> bool:
 		if value is None:
-			# return only True if self.__expectedType is None
-			return self.__expectedType is type(None)
+			if self.__nDebug:
+				self._printCodeLocation(__file__)
+			return False
 
-		if isinstance(self.__expectedType, type):
-			return self.____check_expectedTypeIsType(self.__expectedType, value)
-
-		if (self.__expectedType.__module__ == "typing") and str(self.__expectedType).startswith("<function NewType."):
-			return self.____check_expectedTypeIsNewType(self.__expectedType, value)
-
-		raise Exception("????expectedType: " + repr(self.__expectedType))
+		presentedTypeStr = type(value).__name__
+		ret = presentedTypeStr == self.__expectedTypeName
+		if ret and self.__nDebug:
+			self._printCodeLocation(__file__)
+		return ret
 	#
 
 	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsType<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + "\t__expectedType=" + repr(self.__expectedType))
+		printFunc(prefix + "CTIsType__Single_NewType<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		printFunc(prefix + "\t__expectedTypeName=" + repr(self.__expectedTypeName))
 		printFunc(prefix + ")>")
 	#
 

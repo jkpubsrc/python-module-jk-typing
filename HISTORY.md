@@ -24,4 +24,10 @@
 * 2022-03-30
 	* Added: orgSignature
 
+* 2023-03-11
+	* Added: Processing typing.NewType
+	* Improved: Processing None
+
+* 2023-03-11
+	* Refactored: Tests and experiments
 

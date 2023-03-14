@@ -1,0 +1,44 @@
+
+
+Python: 3.9.15 (main, Nov 29 2022, 21:27:27) 
+[GCC 12.2.1 20220924]
+
+
+@@>> wrapping function someFunction(..) with checkFunctionSignature() ...
+	@@>> Annotations:
+		@@>> Annotation for 'vIntOrFloat': typing.Union[int, float]
+	@@>> Signature:
+		@@>> Signature parameter for 'vIntOrFloat': <Parameter "vIntOrFloat: Union[int, float]">
+			|	annotation: typing.Union[int, float]
+			|	default: <class 'inspect._empty'>
+			|	kind: POSITIONAL_OR_KEYWORD
+	@@>> Return annotation: <class 'inspect._empty'>
+--
+@@ <class 'typing._UnionGenericAlias'>
+@@ typing.Union[int, float]
+@@ nEnableDebugging = 2
+@@ _name           None
+@@ __origin__      typing.Union
+@@ __args__        (<class 'int'>, <class 'float'>)
+@@ _inst           True
+@@ __parameters__  ()
+--
+@@ <class 'type'>
+@@ <class 'int'>
+@@ nEnableDebugging = 2
+--
+@@ <class 'type'>
+@@ <class 'float'>
+@@ nEnableDebugging = 2
+	@@>> Signature parameter compilation for 'vIntOrFloat':
+		|	CTIsType__Union<( argName='vIntOrFloat', sType='Union[int, float]'
+		|		__nestedAlternativeCheckFuncs=[
+		|			CTIsType<( argName='vIntOrFloat', sType='Union[int, float]'
+		|				__expectedType=<class 'int'>
+		|			)>
+		|			CTIsType<( argName='vIntOrFloat', sType='Union[int, float]'
+		|				__expectedType=<class 'float'>
+		|			)>
+		|		]
+		|	)>
+@@>> Not using log descend.

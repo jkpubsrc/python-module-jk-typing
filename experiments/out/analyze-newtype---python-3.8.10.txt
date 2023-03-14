@@ -1,0 +1,556 @@
+<function NewType.<locals>.new_type at 0x7f7eb66c21f0>
+
+
+
+__annotations__ :: type = <class 'dict'>
+	data = {}
+
+__call__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__call__' of function object at 0x7f7eb66c21f0>
+
+__class__ :: type = <class 'type'>
+	data = <class 'function'>
+
+__closure__ :: type = <class 'NoneType'>
+	data = None
+
+__code__ :: type = <class 'code'>
+	data = <code object new_type at 0x7f7eb6513be0, file "/usr/lib/python3.8/typing.py", line 1822>
+
+__defaults__ :: type = <class 'NoneType'>
+	data = None
+
+__delattr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__delattr__' of function object at 0x7f7eb66c21f0>
+
+__dict__ :: type = <class 'dict'>
+	data = {'__supertype__': <class 'object'>}
+
+__dir__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __dir__ of function object at 0x7f7eb66c21f0>
+
+__doc__ :: type = <class 'NoneType'>
+	data = None
+
+__eq__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__eq__' of function object at 0x7f7eb66c21f0>
+
+__format__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __format__ of function object at 0x7f7eb66c21f0>
+
+__ge__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__ge__' of function object at 0x7f7eb66c21f0>
+
+__get__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__get__' of function object at 0x7f7eb66c21f0>
+
+__getattribute__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__getattribute__' of function object at 0x7f7eb66c21f0>
+
+__globals__ :: type = <class 'dict'>
+	data = {'ABCMeta': <class 'abc.ABCMeta'>,
+	  'AbstractSet': typing.AbstractSet,
+	  'Any': typing.Any,
+	  'AnyStr': ~AnyStr,
+	  'AsyncContextManager': typing.AbstractAsyncContextManager,
+	  'AsyncGenerator': typing.AsyncGenerator,
+	  'AsyncIterable': typing.AsyncIterable,
+	  'AsyncIterator': typing.AsyncIterator,
+	  'Awaitable': typing.Awaitable,
+	  'BinaryIO': <class 'typing.BinaryIO'>,
+	  'ByteString': typing.ByteString,
+	  'CT_co': +CT_co,
+	  'Callable': typing.Callable,
+	  'ChainMap': typing.ChainMap,
+	  'ClassVar': typing.ClassVar,
+	  'Collection': typing.Collection,
+	  'Container': typing.Container,
+	  'ContextManager': typing.AbstractContextManager,
+	  'Coroutine': typing.Coroutine,
+	  'Counter': typing.Counter,
+	  'DefaultDict': typing.DefaultDict,
+	  'Deque': typing.Deque,
+	  'Dict': typing.Dict,
+	  'EXCLUDED_ATTRIBUTES': ['__parameters__',
+	                          '__orig_bases__',
+	                          '__orig_class__',
+	                          '_is_protocol',
+	                          '_is_runtime_protocol',
+	                          '__abstractmethods__',
+	                          '__annotations__',
+	                          '__dict__',
+	                          '__doc__',
+	                          '__init__',
+	                          '__module__',
+	                          '__new__',
+	                          '__slots__',
+	                          '__subclasshook__',
+	                          '__weakref__',
+	                          '_MutableMapping__marker'],
+	  'Final': typing.Final,
+	  'ForwardRef': <class 'typing.ForwardRef'>,
+	  'FrozenSet': typing.FrozenSet,
+	  'Generator': typing.Generator,
+	  'Generic': <class 'typing.Generic'>,
+	  'Hashable': typing.Hashable,
+	  'IO': <class 'typing.IO'>,
+	  'ItemsView': typing.ItemsView,
+	  'Iterable': typing.Iterable,
+	  'Iterator': typing.Iterator,
+	  'KT': ~KT,
+	  'KeysView': typing.KeysView,
+	  'List': typing.List,
+	  'Literal': typing.Literal,
+	  'Mapping': typing.Mapping,
+	  'MappingView': typing.MappingView,
+	  'Match': typing.Match,
+	  'MethodDescriptorType': <class 'method_descriptor'>,
+	  'MethodWrapperType': <class 'method-wrapper'>,
+	  'MutableMapping': typing.MutableMapping,
+	  'MutableSequence': typing.MutableSequence,
+	  'MutableSet': typing.MutableSet,
+	  'NamedTuple': <class 'typing.NamedTuple'>,
+	  'NamedTupleMeta': <class 'typing.NamedTupleMeta'>,
+	  'NewType': <function NewType at 0x7f7eb64e2b80>,
+	  'NoReturn': typing.NoReturn,
+	  'Optional': typing.Optional,
+	  'OrderedDict': typing.OrderedDict,
+	  'Pattern': typing.Pattern,
+	  'Protocol': <class 'typing.Protocol'>,
+	  'Reversible': typing.Reversible,
+	  'Sequence': typing.Sequence,
+	  'Set': typing.Set,
+	  'Sized': typing.Sized,
+	  'SupportsAbs': <class 'typing.SupportsAbs'>,
+	  'SupportsBytes': <class 'typing.SupportsBytes'>,
+	  'SupportsComplex': <class 'typing.SupportsComplex'>,
+	  'SupportsFloat': <class 'typing.SupportsFloat'>,
+	  'SupportsIndex': <class 'typing.SupportsIndex'>,
+	  'SupportsInt': <class 'typing.SupportsInt'>,
+	  'SupportsRound': <class 'typing.SupportsRound'>,
+	  'T': ~T,
+	  'TYPE_CHECKING': False,
+	  'T_co': +T_co,
+	  'T_contra': -T_contra,
+	  'Text': <class 'str'>,
+	  'TextIO': <class 'typing.TextIO'>,
+	  'Tuple': typing.Tuple,
+	  'Type': typing.Type,
+	  'TypeVar': <class 'typing.TypeVar'>,
+	  'TypedDict': <class 'typing.TypedDict'>,
+	  'Union': typing.Union,
+	  'VT': ~VT,
+	  'VT_co': +VT_co,
+	  'V_co': +V_co,
+	  'ValuesView': typing.ValuesView,
+	  'WrapperDescriptorType': <class 'wrapper_descriptor'>,
+	  '_Final': <class 'typing._Final'>,
+	  '_GenericAlias': <class 'typing._GenericAlias'>,
+	  '_Immutable': <class 'typing._Immutable'>,
+	  '_PROTO_WHITELIST': {'collections.abc': ['Callable',
+	                                           'Awaitable',
+	                                           'Iterable',
+	                                           'Iterator',
+	                                           'AsyncIterable',
+	                                           'Hashable',
+	                                           'Sized',
+	                                           'Container',
+	                                           'Collection',
+	                                           'Reversible'],
+	                       'contextlib': ['AbstractContextManager', 'AbstractAsyncContextManager']},
+	  '_ProtocolMeta': <class 'typing._ProtocolMeta'>,
+	  '_SPECIAL_NAMES': ['__abstractmethods__',
+	                     '__annotations__',
+	                     '__dict__',
+	                     '__doc__',
+	                     '__init__',
+	                     '__module__',
+	                     '__new__',
+	                     '__slots__',
+	                     '__subclasshook__',
+	                     '__weakref__'],
+	  '_SpecialForm': <class 'typing._SpecialForm'>,
+	  '_TYPING_INTERNALS': ['__parameters__', '__orig_bases__', '__orig_class__', '_is_protocol', '_is_runtime_protocol'],
+	  '_TypedDictMeta': <class 'typing._TypedDictMeta'>,
+	  '_TypingEllipsis': <class 'typing._TypingEllipsis'>,
+	  '_TypingEmpty': <class 'typing._TypingEmpty'>,
+	  '_VariadicGenericAlias': <class 'typing._VariadicGenericAlias'>,
+	  '__all__': ['Any',
+	              'Callable',
+	              'ClassVar',
+	              'Final',
+	              'ForwardRef',
+	              'Generic',
+	              'Literal',
+	              'Optional',
+	              'Protocol',
+	              'Tuple',
+	              'Type',
+	              'TypeVar',
+	              'Union',
+	              'AbstractSet',
+	              'ByteString',
+	              'Container',
+	              'ContextManager',
+	              'Hashable',
+	              'ItemsView',
+	              'Iterable',
+	              'Iterator',
+	              'KeysView',
+	              'Mapping',
+	              'MappingView',
+	              'MutableMapping',
+	              'MutableSequence',
+	              'MutableSet',
+	              'Sequence',
+	              'Sized',
+	              'ValuesView',
+	              'Awaitable',
+	              'AsyncIterator',
+	              'AsyncIterable',
+	              'Coroutine',
+	              'Collection',
+	              'AsyncGenerator',
+	              'AsyncContextManager',
+	              'Reversible',
+	              'SupportsAbs',
+	              'SupportsBytes',
+	              'SupportsComplex',
+	              'SupportsFloat',
+	              'SupportsIndex',
+	              'SupportsInt',
+	              'SupportsRound',
+	              'ChainMap',
+	              'Counter',
+	              'Deque',
+	              'Dict',
+	              'DefaultDict',
+	              'List',
+	              'OrderedDict',
+	              'Set',
+	              'FrozenSet',
+	              'NamedTuple',
+	              'TypedDict',
+	              'Generator',
+	              'AnyStr',
+	              'cast',
+	              'final',
+	              'get_args',
+	              'get_origin',
+	              'get_type_hints',
+	              'NewType',
+	              'no_type_check',
+	              'no_type_check_decorator',
+	              'NoReturn',
+	              'overload',
+	              'runtime_checkable',
+	              'Text',
+	              'TYPE_CHECKING'],
+	  '__builtins__': {'ArithmeticError': <class 'ArithmeticError'>,
+	                   'AssertionError': <class 'AssertionError'>,
+	                   'AttributeError': <class 'AttributeError'>,
+	                   'BaseException': <class 'BaseException'>,
+	                   'BlockingIOError': <class 'BlockingIOError'>,
+	                   'BrokenPipeError': <class 'BrokenPipeError'>,
+	                   'BufferError': <class 'BufferError'>,
+	                   'BytesWarning': <class 'BytesWarning'>,
+	                   'ChildProcessError': <class 'ChildProcessError'>,
+	                   'ConnectionAbortedError': <class 'ConnectionAbortedError'>,
+	                   'ConnectionError': <class 'ConnectionError'>,
+	                   'ConnectionRefusedError': <class 'ConnectionRefusedError'>,
+	                   'ConnectionResetError': <class 'ConnectionResetError'>,
+	                   'DeprecationWarning': <class 'DeprecationWarning'>,
+	                   'EOFError': <class 'EOFError'>,
+	                   'Ellipsis': Ellipsis,
+	                   'EnvironmentError': <class 'OSError'>,
+	                   'Exception': <class 'Exception'>,
+	                   'False': False,
+	                   'FileExistsError': <class 'FileExistsError'>,
+	                   'FileNotFoundError': <class 'FileNotFoundError'>,
+	                   'FloatingPointError': <class 'FloatingPointError'>,
+	                   'FutureWarning': <class 'FutureWarning'>,
+	                   'GeneratorExit': <class 'GeneratorExit'>,
+	                   'IOError': <class 'OSError'>,
+	                   'ImportError': <class 'ImportError'>,
+	                   'ImportWarning': <class 'ImportWarning'>,
+	                   'IndentationError': <class 'IndentationError'>,
+	                   'IndexError': <class 'IndexError'>,
+	                   'InterruptedError': <class 'InterruptedError'>,
+	                   'IsADirectoryError': <class 'IsADirectoryError'>,
+	                   'KeyError': <class 'KeyError'>,
+	                   'KeyboardInterrupt': <class 'KeyboardInterrupt'>,
+	                   'LookupError': <class 'LookupError'>,
+	                   'MemoryError': <class 'MemoryError'>,
+	                   'ModuleNotFoundError': <class 'ModuleNotFoundError'>,
+	                   'NameError': <class 'NameError'>,
+	                   'None': None,
+	                   'NotADirectoryError': <class 'NotADirectoryError'>,
+	                   'NotImplemented': NotImplemented,
+	                   'NotImplementedError': <class 'NotImplementedError'>,
+	                   'OSError': <class 'OSError'>,
+	                   'OverflowError': <class 'OverflowError'>,
+	                   'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>,
+	                   'PermissionError': <class 'PermissionError'>,
+	                   'ProcessLookupError': <class 'ProcessLookupError'>,
+	                   'RecursionError': <class 'RecursionError'>,
+	                   'ReferenceError': <class 'ReferenceError'>,
+	                   'ResourceWarning': <class 'ResourceWarning'>,
+	                   'RuntimeError': <class 'RuntimeError'>,
+	                   'RuntimeWarning': <class 'RuntimeWarning'>,
+	                   'StopAsyncIteration': <class 'StopAsyncIteration'>,
+	                   'StopIteration': <class 'StopIteration'>,
+	                   'SyntaxError': <class 'SyntaxError'>,
+	                   'SyntaxWarning': <class 'SyntaxWarning'>,
+	                   'SystemError': <class 'SystemError'>,
+	                   'SystemExit': <class 'SystemExit'>,
+	                   'TabError': <class 'TabError'>,
+	                   'TimeoutError': <class 'TimeoutError'>,
+	                   'True': True,
+	                   'TypeError': <class 'TypeError'>,
+	                   'UnboundLocalError': <class 'UnboundLocalError'>,
+	                   'UnicodeDecodeError': <class 'UnicodeDecodeError'>,
+	                   'UnicodeEncodeError': <class 'UnicodeEncodeError'>,
+	                   'UnicodeError': <class 'UnicodeError'>,
+	                   'UnicodeTranslateError': <class 'UnicodeTranslateError'>,
+	                   'UnicodeWarning': <class 'UnicodeWarning'>,
+	                   'UserWarning': <class 'UserWarning'>,
+	                   'ValueError': <class 'ValueError'>,
+	                   'Warning': <class 'Warning'>,
+	                   'ZeroDivisionError': <class 'ZeroDivisionError'>,
+	                   '__build_class__': <built-in function __build_class__>,
+	                   '__debug__': True,
+	                   '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.",
+	                   '__import__': <built-in function __import__>,
+	                   '__loader__': <class '_frozen_importlib.BuiltinImporter'>,
+	                   '__name__': 'builtins',
+	                   '__package__': '',
+	                   '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>),
+	                   'abs': <built-in function abs>,
+	                   'all': <built-in function all>,
+	                   'any': <built-in function any>,
+	                   'ascii': <built-in function ascii>,
+	                   'bin': <built-in function bin>,
+	                   'bool': <class 'bool'>,
+	                   'breakpoint': <built-in function breakpoint>,
+	                   'bytearray': <class 'bytearray'>,
+	                   'bytes': <class 'bytes'>,
+	                   'callable': <built-in function callable>,
+	                   'chr': <built-in function chr>,
+	                   'classmethod': <class 'classmethod'>,
+	                   'compile': <built-in function compile>,
+	                   'complex': <class 'complex'>,
+	                   'copyright': Copyright (c) 2001-2021 Python Software Foundation.
+	 All Rights Reserved.
+	 
+	 Copyright (c) 2000 BeOpen.com.
+	 All Rights Reserved.
+	 
+	 Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+	 All Rights Reserved.
+	 
+	 Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+	 All Rights Reserved.,
+	                   'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+	     for supporting Python development.  See www.python.org for more information.,
+	                   'delattr': <built-in function delattr>,
+	                   'dict': <class 'dict'>,
+	                   'dir': <built-in function dir>,
+	                   'divmod': <built-in function divmod>,
+	                   'enumerate': <class 'enumerate'>,
+	                   'eval': <built-in function eval>,
+	                   'exec': <built-in function exec>,
+	                   'exit': Use exit() or Ctrl-D (i.e. EOF) to exit,
+	                   'filter': <class 'filter'>,
+	                   'float': <class 'float'>,
+	                   'format': <built-in function format>,
+	                   'frozenset': <class 'frozenset'>,
+	                   'getattr': <built-in function getattr>,
+	                   'globals': <built-in function globals>,
+	                   'hasattr': <built-in function hasattr>,
+	                   'hash': <built-in function hash>,
+	                   'help': Type help() for interactive help, or help(object) for help about object.,
+	                   'hex': <built-in function hex>,
+	                   'id': <built-in function id>,
+	                   'input': <built-in function input>,
+	                   'int': <class 'int'>,
+	                   'isinstance': <built-in function isinstance>,
+	                   'issubclass': <built-in function issubclass>,
+	                   'iter': <built-in function iter>,
+	                   'len': <built-in function len>,
+	                   'license': Type license() to see the full license text,
+	                   'list': <class 'list'>,
+	                   'locals': <built-in function locals>,
+	                   'map': <class 'map'>,
+	                   'max': <built-in function max>,
+	                   'memoryview': <class 'memoryview'>,
+	                   'min': <built-in function min>,
+	                   'next': <built-in function next>,
+	                   'object': <class 'object'>,
+	                   'oct': <built-in function oct>,
+	                   'open': <built-in function open>,
+	                   'ord': <built-in function ord>,
+	                   'pow': <built-in function pow>,
+	                   'print': <built-in function print>,
+	                   'property': <class 'property'>,
+	                   'quit': Use quit() or Ctrl-D (i.e. EOF) to exit,
+	                   'range': <class 'range'>,
+	                   'repr': <built-in function repr>,
+	                   'reversed': <class 'reversed'>,
+	                   'round': <built-in function round>,
+	                   'set': <class 'set'>,
+	                   'setattr': <built-in function setattr>,
+	                   'slice': <class 'slice'>,
+	                   'sorted': <built-in function sorted>,
+	                   'staticmethod': <class 'staticmethod'>,
+	                   'str': <class 'str'>,
+	                   'sum': <built-in function sum>,
+	                   'super': <class 'super'>,
+	                   'tuple': <class 'tuple'>,
+	                   'type': <class 'type'>,
+	                   'vars': <built-in function vars>,
+	                   'zip': <class 'zip'>},
+	  '__cached__': '/usr/lib/python3.8/__pycache__/typing.cpython-38.pyc',
+	  '__doc__': '\n'
+	             'The typing module: Support for gradual typing as defined by PEP 484.\n'
+	             '\n'
+	             'At large scale, the structure of the module is following:\n'
+	             '* Imports and exports, all public names should be explicitly added to __all__.\n'
+	             '* Internal helper functions: these should never be used in code outside this module.\n'
+	             '* _SpecialForm and its instances (special forms): Any, NoReturn, ClassVar, Union, Optional\n'
+	             '* Two classes whose instances can be type arguments in addition to types: ForwardRef and TypeVar\n'
+	             '* The core of internal generics API: _GenericAlias and _VariadicGenericAlias, the latter is\n'
+	             '  currently only used by Tuple and Callable. All subscripted types like X[int], Union[int, str],\n'
+	             '  etc., are instances of either of these classes.\n'
+	             '* The public counterpart of the generics API consists of two classes: Generic and Protocol.\n'
+	             '* Public helper functions: get_type_hints, overload, cast, no_type_check,\n'
+	             '  no_type_check_decorator.\n'
+	             '* Generic aliases for collections.abc ABCs and few additional protocols.\n'
+	             '* Special types: NewType, NamedTuple, TypedDict.\n'
+	             '* Wrapper submodules for re and io related types.\n',
+	  '__file__': '/usr/lib/python3.8/typing.py',
+	  '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x7f7eb65931f0>,
+	  '__name__': 'typing',
+	  '__package__': '',
+	  '__spec__': ModuleSpec(name='typing', loader=<_frozen_importlib_external.SourceFileLoader object at 0x7f7eb65931f0>, origin='/usr/lib/python3.8/typing.py'),
+	  '_alias': <function _alias at 0x7f7eb64dbf70>,
+	  '_allow_reckless_class_cheks': <function _allow_reckless_class_cheks at 0x7f7eb64db790>,
+	  '_allowed_types': (<class 'function'>,
+	                     <class 'builtin_function_or_method'>,
+	                     <class 'method'>,
+	                     <class 'module'>,
+	                     <class 'wrapper_descriptor'>,
+	                     <class 'method-wrapper'>,
+	                     <class 'method_descriptor'>),
+	  '_check_fails': <function _check_fails at 0x7f7eb64e2af0>,
+	  '_check_generic': <function _check_generic at 0x7f7eb64d6790>,
+	  '_cleanups': [<built-in method cache_clear of functools._lru_cache_wrapper object at 0x7f7eb64d7280>,
+	                <built-in method cache_clear of functools._lru_cache_wrapper object at 0x7f7eb64d79d0>,
+	                <built-in method cache_clear of functools._lru_cache_wrapper object at 0x7f7eb64db280>,
+	                <built-in method cache_clear of functools._lru_cache_wrapper object at 0x7f7eb64db550>],
+	  '_collect_type_vars': <function _collect_type_vars at 0x7f7eb64d6670>,
+	  '_dict_new': <function _dict_new at 0x7f7eb64e28b0>,
+	  '_eval_type': <function _eval_type at 0x7f7eb64d6940>,
+	  '_get_defaults': <function _get_defaults at 0x7f7eb64dba60>,
+	  '_get_protocol_attrs': <function _get_protocol_attrs at 0x7f7eb64d7790>,
+	  '_is_callable_members_only': <function _is_callable_members_only at 0x7f7eb64db670>,
+	  '_is_dunder': <function _is_dunder at 0x7f7eb64d69d0>,
+	  '_make_nmtuple': <function _make_nmtuple at 0x7f7eb64e2040>,
+	  '_no_init': <function _no_init at 0x7f7eb64db700>,
+	  '_normalize_alias': {'Set': 'AbstractSet',
+	                       'defaultdict': 'DefaultDict',
+	                       'deque': 'Deque',
+	                       'dict': 'Dict',
+	                       'frozenset': 'FrozenSet',
+	                       'list': 'List',
+	                       'set': 'Set',
+	                       'tuple': 'Tuple',
+	                       'type': 'Type'},
+	  '_overload_dummy': <function _overload_dummy at 0x7f7eb64dbdc0>,
+	  '_prohibited': ('__new__', '__init__', '__slots__', '__getnewargs__', '_fields', '_field_defaults', '_field_types', '_make', '_replace', '_asdict', '_source'),
+	  '_remove_dups_flatten': <function _remove_dups_flatten at 0x7f7eb64d6820>,
+	  '_special': ('__module__', '__name__', '__annotations__'),
+	  '_subs_tvars': <function _subs_tvars at 0x7f7eb64d6700>,
+	  '_tp_cache': <function _tp_cache at 0x7f7eb64d68b0>,
+	  '_type_check': <function _type_check at 0x7f7eb658d430>,
+	  '_type_repr': <function _type_repr at 0x7f7eb64d64c0>,
+	  '_typeddict_new': <function _typeddict_new at 0x7f7eb64e2a60>,
+	  'abstractmethod': <function abstractmethod at 0x7f7eb666cb80>,
+	  'cast': <function cast at 0x7f7eb64db9d0>,
+	  'collections': <module 'collections' from '/usr/lib/python3.8/collections/__init__.py'>,
+	  'contextlib': <module 'contextlib' from '/usr/lib/python3.8/contextlib.py'>,
+	  'final': <function final at 0x7f7eb64dbee0>,
+	  'functools': <module 'functools' from '/usr/lib/python3.8/functools.py'>,
+	  'get_args': <function get_args at 0x7f7eb64dbc10>,
+	  'get_origin': <function get_origin at 0x7f7eb64dbb80>,
+	  'get_type_hints': <function get_type_hints at 0x7f7eb64dbaf0>,
+	  'io': <class 'typing.io'>,
+	  'no_type_check': <function no_type_check at 0x7f7eb64dbca0>,
+	  'no_type_check_decorator': <function no_type_check_decorator at 0x7f7eb64dbd30>,
+	  'operator': <module 'operator' from '/usr/lib/python3.8/operator.py'>,
+	  'overload': <function overload at 0x7f7eb64dbe50>,
+	  're': <class 'typing.re'>,
+	  'runtime_checkable': <function runtime_checkable at 0x7f7eb64db820>,
+	  'stdlib_re': <module 're' from '/usr/lib/python3.8/re.py'>,
+	  'sys': <module 'sys' (built-in)>,
+	  'types': <module 'types' from '/usr/lib/python3.8/types.py'>}
+
+__gt__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__gt__' of function object at 0x7f7eb66c21f0>
+
+__hash__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__hash__' of function object at 0x7f7eb66c21f0>
+
+__init__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__init__' of function object at 0x7f7eb66c21f0>
+
+__init_subclass__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __init_subclass__ of type object at 0x8fc9c0>
+
+__kwdefaults__ :: type = <class 'NoneType'>
+	data = None
+
+__le__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__le__' of function object at 0x7f7eb66c21f0>
+
+__lt__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__lt__' of function object at 0x7f7eb66c21f0>
+
+__module__ :: type = <class 'str'>
+	data = 'typing'
+
+__name__ :: type = <class 'str'>
+	data = 'FooBar'
+
+__ne__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__ne__' of function object at 0x7f7eb66c21f0>
+
+__new__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __new__ of type object at 0x8fc9c0>
+
+__qualname__ :: type = <class 'str'>
+	data = 'NewType.<locals>.new_type'
+
+__reduce__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __reduce__ of function object at 0x7f7eb66c21f0>
+
+__reduce_ex__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __reduce_ex__ of function object at 0x7f7eb66c21f0>
+
+__repr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__repr__' of function object at 0x7f7eb66c21f0>
+
+__setattr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__setattr__' of function object at 0x7f7eb66c21f0>
+
+__sizeof__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __sizeof__ of function object at 0x7f7eb66c21f0>
+
+__str__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__str__' of function object at 0x7f7eb66c21f0>
+
+__subclasshook__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __subclasshook__ of type object at 0x8fc9c0>
+
+__supertype__ :: type = <class 'type'>
+	data = <class 'object'>
+

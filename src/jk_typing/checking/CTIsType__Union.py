@@ -1,5 +1,7 @@
 
 
+import typing
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -15,11 +17,24 @@ class CTIsType__Union(AbstractCTNode):
 	#
 	# Constructor method.
 	#
-	def __init__(self, argName:str, sType:str, bDebug:bool, nestedCheckFuncs):
+	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int], nestedAlternativeCheckFuncs:typing.Union[tuple,list]):
+		if argName is not None:
+			assert isinstance(argName, str)
+		assert isinstance(sType, str)
+		assert isinstance(nDebug, (bool, int))
+		assert isinstance(nestedAlternativeCheckFuncs, (tuple,list))
+		for v in nestedAlternativeCheckFuncs:
+			if v is None:
+				print(">>>> argName =", argName)
+				print(">>>> nestedAlternativeCheckFuncs =", nestedAlternativeCheckFuncs)
+				raise AssertionError("nestedAlternativeCheckFuncs contains None!")
+
+		# ----
+
 		self.argName = argName
 		self.sType = sType
-		self.bDebug = bDebug
-		self.__nestedCheckFuncs = nestedCheckFuncs
+		self.__nDebug = nDebug
+		self.__nestedAlternativeCheckFuncs = nestedAlternativeCheckFuncs
 	#
 
 	################################################################################################################################
@@ -35,21 +50,21 @@ class CTIsType__Union(AbstractCTNode):
 	################################################################################################################################
 
 	def __call__(self, value) -> bool:
-		for f in self.__nestedCheckFuncs:
+		for f in self.__nestedAlternativeCheckFuncs:
 			if f.__call__(value):
 				return True
-		if self.bDebug:
+		if self.__nDebug:
 			self._printCodeLocation(__file__)
 		return False
 	#
 
-	def dump(self, prefix:str):
-		print(prefix + "CTIsType__Union<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		print(prefix + "\t__nestedCheckFuncs=[")
-		for x in self.__nestedCheckFuncs:
-			x.dump(prefix + "\t\t")
-		print(prefix + "\t]")
-		print(prefix + ")>")
+	def _dump(self, prefix:str, printFunc:typing.Callable):
+		printFunc(prefix + "CTIsType__Union<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+		printFunc(prefix + "\t__nestedAlternativeCheckFuncs=[")
+		for x in self.__nestedAlternativeCheckFuncs:
+			x._dump(prefix + "\t\t", printFunc)
+		printFunc(prefix + "\t]")
+		printFunc(prefix + ")>")
 	#
 
 #

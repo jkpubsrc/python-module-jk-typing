@@ -7,7 +7,10 @@ examples/__pycache__/
 examples/**/__pycache__/
 testing/__pycache__/
 testing/**/__pycache__/
+experiments/__pycache__/
+experiments/**/__pycache__/
 .svn/
 .vscode
 examples/*.log
-
+*.bak
+*.old

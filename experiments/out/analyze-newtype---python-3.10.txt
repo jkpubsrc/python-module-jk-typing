@@ -1,0 +1,119 @@
+__main__.FooBar
+
+
+
+__call__ :: type = <class 'method'>
+	data = <bound method NewType.__call__ of __main__.FooBar>
+
+__class__ :: type = <class 'type'>
+	data = <class 'typing.NewType'>
+
+__delattr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__delattr__' of NewType object at 0x7f0083c07fd0>
+
+__dict__ :: type = <class 'dict'>
+	data = {'__module__': '__main__',
+	  '__name__': 'FooBar',
+	  '__qualname__': 'FooBar',
+	  '__supertype__': <class 'object'>}
+
+__dir__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __dir__ of NewType object at 0x7f0083c07fd0>
+
+__doc__ :: type = <class 'str'>
+	data = ('NewType creates simple unique types with almost zero\n'
+	  '    runtime overhead. NewType(name, tp) is considered a subtype of tp\n'
+	  '    by static type checkers. At runtime, NewType(name, tp) returns\n'
+	  '    a dummy callable that simply returns its argument. Usage::\n'
+	  '\n'
+	  "        UserId = NewType('UserId', int)\n"
+	  '\n'
+	  '        def name_by_id(user_id: UserId) -> str:\n'
+	  '            ...\n'
+	  '\n'
+	  "        UserId('user')          # Fails type check\n"
+	  '\n'
+	  '        name_by_id(42)          # Fails type check\n'
+	  '        name_by_id(UserId(42))  # OK\n'
+	  '\n'
+	  '        num = UserId(5) + 1     # type: int\n'
+	  '    ')
+
+__eq__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__eq__' of NewType object at 0x7f0083c07fd0>
+
+__format__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __format__ of NewType object at 0x7f0083c07fd0>
+
+__ge__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__ge__' of NewType object at 0x7f0083c07fd0>
+
+__getattribute__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__getattribute__' of NewType object at 0x7f0083c07fd0>
+
+__gt__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__gt__' of NewType object at 0x7f0083c07fd0>
+
+__hash__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__hash__' of NewType object at 0x7f0083c07fd0>
+
+__init__ :: type = <class 'method'>
+	data = <bound method NewType.__init__ of __main__.FooBar>
+
+__init_subclass__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __init_subclass__ of type object at 0x55eb2bc59590>
+
+__le__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__le__' of NewType object at 0x7f0083c07fd0>
+
+__lt__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__lt__' of NewType object at 0x7f0083c07fd0>
+
+__module__ :: type = <class 'str'>
+	data = '__main__'
+
+__name__ :: type = <class 'str'>
+	data = 'FooBar'
+
+__ne__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__ne__' of NewType object at 0x7f0083c07fd0>
+
+__new__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __new__ of type object at 0x55eb2ad9d800>
+
+__or__ :: type = <class 'method'>
+	data = <bound method NewType.__or__ of __main__.FooBar>
+
+__qualname__ :: type = <class 'str'>
+	data = 'FooBar'
+
+__reduce__ :: type = <class 'method'>
+	data = <bound method NewType.__reduce__ of __main__.FooBar>
+
+__reduce_ex__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __reduce_ex__ of NewType object at 0x7f0083c07fd0>
+
+__repr__ :: type = <class 'method'>
+	data = <bound method NewType.__repr__ of __main__.FooBar>
+
+__ror__ :: type = <class 'method'>
+	data = <bound method NewType.__ror__ of __main__.FooBar>
+
+__setattr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__setattr__' of NewType object at 0x7f0083c07fd0>
+
+__sizeof__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __sizeof__ of NewType object at 0x7f0083c07fd0>
+
+__str__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__str__' of NewType object at 0x7f0083c07fd0>
+
+__subclasshook__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __subclasshook__ of type object at 0x55eb2bc59590>
+
+__supertype__ :: type = <class 'type'>
+	data = <class 'object'>
+
+__weakref__ :: type = <class 'NoneType'>
+	data = None
+

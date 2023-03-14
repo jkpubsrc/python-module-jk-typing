@@ -1,0 +1,124 @@
+__annotations__ :: type = <class 'dict'>
+	data = {'fooBar': <function NewType.<locals>.new_type at 0x7f3ab01b31f0>}
+
+__call__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__call__' of function object at 0x7f3aaffea430>
+
+__class__ :: type = <class 'type'>
+	data = <class 'function'>
+
+__closure__ :: type = <class 'NoneType'>
+	data = None
+
+__code__ :: type = <class 'code'>
+	data = <code object someFunction at 0x7f3ab017b5b0, file "./analyze-function-with-newtype.py", line 16>
+
+__defaults__ :: type = <class 'NoneType'>
+	data = None
+
+__delattr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__delattr__' of function object at 0x7f3aaffea430>
+
+__dict__ :: type = <class 'dict'>
+	data = {}
+
+__dir__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __dir__ of function object at 0x7f3aaffea430>
+
+__doc__ :: type = <class 'NoneType'>
+	data = None
+
+__eq__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__eq__' of function object at 0x7f3aaffea430>
+
+__format__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __format__ of function object at 0x7f3aaffea430>
+
+__ge__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__ge__' of function object at 0x7f3aaffea430>
+
+__get__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__get__' of function object at 0x7f3aaffea430>
+
+__getattribute__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__getattribute__' of function object at 0x7f3aaffea430>
+
+__globals__ :: type = <class 'dict'>
+	data = {'FooBar': <function NewType.<locals>.new_type at 0x7f3ab01b31f0>,
+	  'PrintToFile': <class 'PrintToFile.PrintToFile'>,
+	  '__annotations__': {},
+	  '__builtins__': <module 'builtins' (built-in)>,
+	  '__cached__': None,
+	  '__doc__': None,
+	  '__file__': './analyze-function-with-newtype.py',
+	  '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x7f3ab01f54c0>,
+	  '__name__': '__main__',
+	  '__package__': None,
+	  '__spec__': None,
+	  'f': <PrintToFile.PrintToFile object at 0x7f3ab01549a0>,
+	  'k': '__globals__',
+	  'line': "<method-wrapper '__getattribute__' of function object at 0x7f3aaffea430>",
+	  'lines': ["<method-wrapper '__getattribute__' of function object at 0x7f3aaffea430>"],
+	  'n': 0,
+	  'pprint': <module 'pprint' from '/usr/lib/python3.8/pprint.py'>,
+	  'someFunction': <function someFunction at 0x7f3aaffea430>,
+	  'typing': <module 'typing' from '/usr/lib/python3.8/typing.py'>,
+	  'v': <Recursion on dict with id=139890039248448>}
+
+__gt__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__gt__' of function object at 0x7f3aaffea430>
+
+__hash__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__hash__' of function object at 0x7f3aaffea430>
+
+__init__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__init__' of function object at 0x7f3aaffea430>
+
+__init_subclass__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __init_subclass__ of type object at 0x8fc9c0>
+
+__kwdefaults__ :: type = <class 'NoneType'>
+	data = None
+
+__le__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__le__' of function object at 0x7f3aaffea430>
+
+__lt__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__lt__' of function object at 0x7f3aaffea430>
+
+__module__ :: type = <class 'str'>
+	data = '__main__'
+
+__name__ :: type = <class 'str'>
+	data = 'someFunction'
+
+__ne__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__ne__' of function object at 0x7f3aaffea430>
+
+__new__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __new__ of type object at 0x8fc9c0>
+
+__qualname__ :: type = <class 'str'>
+	data = 'someFunction'
+
+__reduce__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __reduce__ of function object at 0x7f3aaffea430>
+
+__reduce_ex__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __reduce_ex__ of function object at 0x7f3aaffea430>
+
+__repr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__repr__' of function object at 0x7f3aaffea430>
+
+__setattr__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__setattr__' of function object at 0x7f3aaffea430>
+
+__sizeof__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __sizeof__ of function object at 0x7f3aaffea430>
+
+__str__ :: type = <class 'method-wrapper'>
+	data = <method-wrapper '__str__' of function object at 0x7f3aaffea430>
+
+__subclasshook__ :: type = <class 'builtin_function_or_method'>
+	data = <built-in method __subclasshook__ of type object at 0x8fc9c0>
+
