@@ -49,12 +49,12 @@ class CTIsType__CheckItems_AllTheSameType(AbstractCTNode):
 	def __call__(self, value) -> bool:
 		if not isinstance(value, self.__expectedType):
 			if self.__nDebug:
-				self._printCodeLocation(__file__)
+				self._printCodeLocation(__file__, False)
 			return False
 		for v in value:
 			if not self.__nestedCheckFunc.__call__(v):
 				if self.__nDebug:
-					self._printCodeLocation(__file__)
+					self._printCodeLocation(__file__, False)
 				return False
 		return True
 	#

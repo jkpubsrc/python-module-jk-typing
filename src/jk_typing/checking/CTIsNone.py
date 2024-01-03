@@ -45,7 +45,7 @@ class CTIsNone(AbstractCTNode):
 	def __call__(self, value) -> bool:
 		b = value is None
 		if not b and self.__nDebug:
-			self._printCodeLocation(__file__)
+			self._printCodeLocation(__file__, b)
 		return b
 	#
 

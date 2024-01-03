@@ -54,7 +54,7 @@ class CTIsType__Union(AbstractCTNode):
 			if f.__call__(value):
 				return True
 		if self.__nDebug:
-			self._printCodeLocation(__file__)
+			self._printCodeLocation(__file__, False)
 		return False
 	#
 

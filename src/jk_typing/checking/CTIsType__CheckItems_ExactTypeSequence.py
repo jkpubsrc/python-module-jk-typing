@@ -55,21 +55,23 @@ class CTIsType__CheckItems_ExactTypeSequence(AbstractCTNode):
 		if not isinstance(value, self.__expectedType):
 			# not the right type
 			if self.__nDebug:
-				self._printCodeLocation(__file__)
+				self._printCodeLocation(__file__, False)
 			return False
 
 		if len(value) != len(self.__nestedCheckFuncList):
 			# sequence specified has invalid length
 			if self.__nDebug:
-				self._printCodeLocation(__file__)
+				self._printCodeLocation(__file__, False)
 			return False
 
 		for v, nestedCheckFunc in zip(value, self.__nestedCheckFuncList):
 			if not nestedCheckFunc.__call__(v):
 				if self.__nDebug:
-					self._printCodeLocation(__file__)
+					self._printCodeLocation(__file__, False)
 				return False
 
+		if self.__nDebug:
+			self._printCodeLocation(__file__, True)
 		return True
 	#
 

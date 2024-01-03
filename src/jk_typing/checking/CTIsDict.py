@@ -49,16 +49,16 @@ class CTIsDict(AbstractCTNode):
 	def __call__(self, value) -> bool:
 		if not isinstance(value, dict):
 			if self.__nDebug:
-				self._printCodeLocation(__file__)
+				self._printCodeLocation(__file__, False)
 			return False
 		for k, v in value.items():
 			if not self.__keyCheckFunc.__call__(k):
 				if self.__nDebug:
-					self._printCodeLocation(__file__)
+					self._printCodeLocation(__file__, False)
 				return False
 			if not self.__valueCheckFunc.__call__(v):
 				if self.__nDebug:
-					self._printCodeLocation(__file__)
+					self._printCodeLocation(__file__, False)
 				return False
 		return True
 	#

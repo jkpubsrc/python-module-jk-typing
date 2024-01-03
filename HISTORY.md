@@ -31,3 +31,6 @@
 * 2023-03-11
 	* Refactored: Tests and experiments
 
+* 2024-01-03
+	* Migrated to TOML file
+	* Improved: Type verification

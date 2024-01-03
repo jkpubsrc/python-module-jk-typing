@@ -59,7 +59,7 @@ class CTIsType__Single_None(AbstractCTNode):
 			return True
 
 		if self.__nDebug:
-			self._printCodeLocation(__file__)
+			self._printCodeLocation(__file__, False)
 		return False
 	#
 

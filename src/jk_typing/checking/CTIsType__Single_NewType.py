@@ -1,6 +1,7 @@
 
 
 import typing
+import sys
 
 from .AbstractCTNode import AbstractCTNode
 
@@ -56,14 +57,17 @@ class CTIsType__Single_NewType(AbstractCTNode):
 	def isSingleNewType(expectedType) -> None:
 		if expectedType is None:
 			return False
-		
-		# python 3.8
-		if isinstance(expectedType, typing.Callable) and (expectedType.__module__ == "typing") and str(expectedType).startswith("<function NewType."):
-			return True
 
-		# python 3.10
-		if isinstance(expectedType, typing.Callable) and (expectedType.__class__ == typing.NewType):
-			return True
+		vi = sys.version_info
+
+		if (vi.major == 3) and (vi.minor >= 9):
+			# python since 3.9
+			if isinstance(expectedType, typing.Callable) and (expectedType.__class__ == typing.NewType):
+				return True
+		else:
+			# python 3.8
+			if isinstance(expectedType, typing.Callable) and (expectedType.__module__ == "typing") and str(expectedType).startswith("<function NewType."):
+				return True
 
 		return False
 	#
@@ -71,13 +75,13 @@ class CTIsType__Single_NewType(AbstractCTNode):
 	def __call__(self, value) -> bool:
 		if value is None:
 			if self.__nDebug:
-				self._printCodeLocation(__file__)
+				self._printCodeLocation(__file__, True)
 			return False
 
 		presentedTypeStr = type(value).__name__
 		ret = presentedTypeStr == self.__expectedTypeName
 		if ret and self.__nDebug:
-			self._printCodeLocation(__file__)
+			self._printCodeLocation(__file__, ret)
 		return ret
 	#
 

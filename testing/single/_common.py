@@ -8,6 +8,8 @@ import typing
 import jk_logging
 import jk_typing
 
+print("jk_typing version: " + jk_typing.__version__)
+print()
 
 
 

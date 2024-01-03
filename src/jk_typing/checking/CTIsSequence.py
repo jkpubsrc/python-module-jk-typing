@@ -54,7 +54,7 @@ class CTIsSequence(AbstractCTNode):
 		if isinstance(value, typing.Sequence):
 			return True
 		if self.__nDebug:
-			self._printCodeLocation(__file__)
+			self._printCodeLocation(__file__, False)
 		return False
 	#
 

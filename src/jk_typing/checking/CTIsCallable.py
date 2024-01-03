@@ -47,7 +47,7 @@ class CTIsCallable(AbstractCTNode):
 			return True
 		else:
 			if self.__nDebug:
-				self._printCodeLocation(__file__)
+				self._printCodeLocation(__file__, False)
 			return False
 	#
 
