@@ -10,7 +10,7 @@ Please note that a full type check with this module is not possible, since this 
 
 Information about this module can be found here:
 
-* [github.org](https://github.com/jkpubsrc/python-module-jk-typing)
+* [github.com](https://github.com/jkpubsrc/python-module-jk-typing)
 	* [Documentation](https://github.com/jkpubsrc/python-module-jk-typing/tree/master/documentation)
 * [pypi.python.org](https://pypi.python.org/pypi/jk_typing)
 
