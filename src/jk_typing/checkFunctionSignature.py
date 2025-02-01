@@ -147,9 +147,25 @@ def _checkType(value, typeSpec, indent:int):
 
 
 
-def _getTypeDescr(t) -> str:
+def _getTypeDescr(t:typing.Union[inspect.Parameter,typing.Any]) -> str:
 	if t is None:
 		return "void"
+	
+	retExtra = ""
+	if isinstance(t, inspect.Parameter):
+		if t.kind == inspect._ParameterKind.VAR_POSITIONAL:
+			retExtra = "*"
+		elif t.kind == inspect._ParameterKind.VAR_KEYWORD:
+			retExtra = "**"
+		elif t.kind == inspect._ParameterKind.POSITIONAL_OR_KEYWORD:
+			pass
+		elif t.kind == inspect._ParameterKind.POSITIONAL_ONLY:
+			pass
+		elif t.kind == inspect._ParameterKind.KEYWORD_ONLY:
+			pass
+		else:
+			# NOTE: this is quite unexpected :-/
+			pass
 
 	s = repr(t)
 	# s should be something like this:
@@ -163,13 +179,13 @@ def _getTypeDescr(t) -> str:
 	elif s.startswith("<class '"):
 		s = s[8:-2]
 	else:
-		return "(unknown:" + s + ")"
+		return retExtra + "(unknown:" + s + ")"
 
 	pos = s.find(":")
 	if pos > 0:
-		return s[pos+1:].strip()
+		return retExtra + s[pos+1:].strip()
 	else:
-		return "?"
+		return retExtra + "?"
 #
 
 
@@ -225,15 +241,18 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int
 			print("\t@@>> Return annotation: " + str(_signature_return_annotation))
 
 		# variables to fill during compile phase
-		_paramCheckers = {}
-		_returnChecker = None
+		_paramCheckers:typing.Dict[str,AbstractCTNode] = {}
+		_returnChecker:AbstractCTNode = None
 
 		# compile
 
 		outWarnList = []			# NOTE: we reuse this object for performance reasons
 		for k, t in _signature._parameters.items():
 			assert isinstance(t, inspect.Parameter)
-			c = CheckTypeCompiler.compile(k, _getTypeDescr(t), t.annotation, t.default, outWarnList, bDebugComp)
+			_bIsArgV = t.kind == inspect._ParameterKind.VAR_POSITIONAL
+			_bIsKWArgs = t.kind == inspect._ParameterKind.VAR_KEYWORD
+			_sType = _getTypeDescr(t)
+			c = CheckTypeCompiler.compile(k, _sType, t.annotation, _bIsArgV, _bIsKWArgs, t.default, outWarnList, bDebugComp)
 			if bDebugComp:
 				if c is not None:
 					print("\t@@>> Signature parameter compilation for " + repr(k) + ":")
@@ -249,10 +268,13 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int
 
 		if _signature._return_annotation != inspect._empty:
 			outWarnList = []
+			_sType = _getTypeDescr(_signature._return_annotation)
 			_returnChecker = CheckTypeCompiler.compile(
 				None,											# argName
-				_getTypeDescr(_signature._return_annotation),	# sType
+				_sType,											# sType
 				_signature._return_annotation,					# typeSpec
+				False,											# bKindIsArgV
+				False,											# bKindIsKWArg
 				inspect._empty,									# defaultValue
 				outWarnList,									# outWarnList
 				bDebugComp										# nEnableDebugging
@@ -324,6 +346,7 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int
 					c = _paramCheckers.get(k)
 					if c:
 						if not c.__call__(v):
+							c.dump()
 							raise ValueError("Argument " + repr(k) + " for " + fn.__name__ + "() is of type '" + repr(type(v)) + "' which does not match '" + c.sType + "' as expected!")
 
 			# ----------------------------------------------------------------

@@ -343,6 +343,8 @@ class CheckTypeCompiler(object):
 			argName:typing.Union[str,None],
 			sType:str,
 			typeSpec,
+			bIsArgV:bool,
+			bIsKWArg:bool,
 			defaultValue,
 			outWarnList:typing.List[str],
 			nEnableDebugging:typing.Union[int,bool] = 0
@@ -351,6 +353,8 @@ class CheckTypeCompiler(object):
 		if argName is not None:
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)
+		assert isinstance(bIsArgV, bool)
+		assert isinstance(bIsKWArg, bool)
 		assert isinstance(outWarnList, list)
 		if isinstance(nEnableDebugging, bool):
 			nEnableDebugging = int(nEnableDebugging)
@@ -367,7 +371,20 @@ class CheckTypeCompiler(object):
 				nEnableDebugging,
 			)
 
+		# ----
+
 		ret = CheckTypeCompiler._0_compile_checking(argName, sType, typeSpec, outWarnList, nEnableDebugging)
+
+		if bIsArgV:
+			# example: *argv:int
+			# the tuple characteristic is implicitely defined, so wrap it here to make this characteristic explicite
+			ret = CTIsType__CheckItems_AllTheSameType(
+				argName,
+				sType,
+				nEnableDebugging,
+				tuple,
+				ret
+			)
 
 		if defaultValue is None:
 			ret = CTIsType__Union(

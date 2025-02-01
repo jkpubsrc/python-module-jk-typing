@@ -34,3 +34,6 @@
 * 2024-01-03
 	* Migrated to TOML file
 	* Improved: Type verification
+
+* 2025-02-01:
+	* Fixed: Processing *argv

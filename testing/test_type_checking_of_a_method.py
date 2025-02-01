@@ -7,10 +7,9 @@ from jk_typing import *
 
 import jk_logging
 
-import jk_typing
 
 
-DEBUGGING_ENABLED = True
+DEBUGGING_ENABLED = False
 
 
 
@@ -25,58 +24,58 @@ DEBUGGING_ENABLED = True
 
 class MyTest(object):
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunction(self, a:bool, b:int, c:str) -> bool:
 		return False
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunc_crazy(self, a, b:int, c:datetime.date, *args, **kwargs) -> None:
 		pass
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunc_list(self, a:typing.List[int]) -> bool:
 		return True
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunc_tuple(self, a:typing.Tuple[int]) -> bool:
 		return True
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunc_set(self, a:typing.Set[int]) -> bool:
 		return True
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunc_frozenset(self, a:typing.FrozenSet[int]) -> bool:
 		return True
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunc_dict(self, a:typing.Dict[str,int]) -> bool:
 		return True
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someFunc_union(self, a:typing.Union[str,int]) -> bool:
 		return True
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someVoidFunction(self, a:str) -> None:
 		b = a + "something"
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someVoidFunctionErr(self, a:str) -> None:
 		b = a + "something"
 		return "foobar"
 	#
 
-	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED)
+	@checkFunctionSignature(bDebug = DEBUGGING_ENABLED, bDebugComp = DEBUGGING_ENABLED)
 	def someVoidFunctionX(self) -> None:
 		pass
 	#
