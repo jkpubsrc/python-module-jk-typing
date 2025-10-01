@@ -2,8 +2,9 @@
 
 import typing
 
-from .AbstractCTNode import AbstractCTNode
+import jk_prettyprintobj
 
+from .AbstractCTNode import AbstractCTNode
 
 
 
@@ -38,6 +39,11 @@ class CTAlwaysTrue(AbstractCTNode):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -46,10 +52,10 @@ class CTAlwaysTrue(AbstractCTNode):
 		return True
 	#
 
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTAlwaysTrue<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + ")>")
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTAlwaysTrue<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

@@ -7,6 +7,7 @@ import inspect
 
 from .checking.AbstractCTNode import AbstractCTNode
 from .checking.CheckTypeCompiler import CheckTypeCompiler
+from .DebugInfoCompile import DebugInfoCompile
 
 
 
@@ -27,7 +28,7 @@ def __checkUnion(value, typeSpecs:list):
 
 if (sys.version_info.major < 3) or (
 	(sys.version_info.major == 3) and (sys.version_info.minor <= 6)):
-	# older python implementation are not yet mature enough.
+	# older Python implementation are not yet mature enough.
 	raise Exception("Python versions below 3.6 are not supported!")
 
 
@@ -189,90 +190,87 @@ def _getTypeDescr(t:typing.Union[inspect.Parameter,typing.Any]) -> str:
 #
 
 
-def _debug_dumpObj(prefix:str, someObj, bSkipUnderscores:bool = True, names:list = None):
-	#print(prefix + "| " + repr(someObj))
-	if someObj is None:
-		return
-	if names is None:
-		names = dir(someObj)
-	for key in names:
-		if bSkipUnderscores and key.startswith("_"):
-			continue
-		print(prefix + "|\t" + key + ": " + str(getattr(someObj, key)))
-#
-
-
 #
 # this is the annotation wrapper that receives arguments and returns the function that does the wrapping
 #
-# @param		bool bDebug							(optional) Enable debugging output at evaluation time.
+# @param		bool bDebug							(optional) Enable debugging output at runtime.
 # @param		int|bool bDebugComp					(optional) Enable debugging output at compile time.
+#													If enabled this case the wrapped function or method will contain a 'debugInfoCompile' variable containing an instance of DebugInfoCompile.
 # @param		str logDescend						(optional) Log descend message.
 # @param		jk_logging.EnumLoglevel logLevel	(optional) Modify the standard descend log level.
 # @param		bool bLogWithhold					(optional) Only log if a minimum log level of warning occurs.
 #
-def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int] = False, logDescend:str = None, logLevel = None, bLogWithhold:bool = False):
+def checkFunctionSignature(
+		bDebug:bool = False,
+		bDebugComp:typing.Union[bool,int] = False,
+		bDebugCompPrint:typing.Union[bool,int] = False,
+		logDescend:str = None,
+		logLevel = None,
+		bLogWithhold:bool = False,
+	):
+
 	assert isinstance(bDebug, bool)
 	assert isinstance(bDebugComp, (bool, int))
+	assert isinstance(bDebugCompPrint, (bool, int))
 	assert isinstance(bLogWithhold, bool)
 
 	# ----
 
-	# this function is executed for every function definition
-	def _wrap_the_function(fn):
-		annotations = typing.get_type_hints(fn)								# receives a normal dictionary
-		_signature = inspect.signature(fn)
-		_signature_parameters = _signature.parameters						# receives an ordered dictionary
-		_signature_return_annotation = _signature.return_annotation			# receives a type annotation structure
+	debugInfoComp:DebugInfoCompile|None = None
+	if bDebugComp:
+		debugInfoComp = DebugInfoCompile()
 
-		if bDebugComp:
-			print("@@>> wrapping function " + fn.__qualname__ + "(..) with checkFunctionSignature() ...")
-			print("\t@@>> Annotations:")
-			for ak, av in annotations.items():
-				print("\t\t@@>> Annotation for " + repr(ak) + ": " + str(av))
-			print("\t@@>> Signature:")
-			for sk, sv in _signature_parameters.items():
-				print("\t\t@@>> Signature parameter for " + repr(sk) + ": " + repr(sv))
-				_debug_dumpObj("\t\t\t", sv, names = ["annotation", "default", "kind"])
-				# parameters are:
-				#	str sv.name				-- the name of the argument
-				#	any sv.annotation		-- the type annotation structure associated with this argument (or inspect._empty if not set)
-				#	obj sv.default			-- the defautl value (or inspect._empty if not set)
-			print("\t@@>> Return annotation: " + str(_signature_return_annotation))
+	# ----
+
+	# NOTE: This function is executed once for every function or method definition.
+	def _wrap_the_function(fn):
+		allAnnotations:typing.Dict[str,typing.Any] = typing.get_type_hints(fn)									# receives a normal dictionary
+		_signature = inspect.signature(fn)
+		_signature_parameters:typing.Mapping[str,inspect.Parameter] = _signature._parameters					# receives an ordered dictionary
+		_signature_return_annotation:type|inspect._empty|inspect._void|None = _signature._return_annotation		# receives a type annotation structure
+
+		if debugInfoComp:
+			debugInfoComp.fqn = fn.__qualname__
+			debugInfoComp.allAnnotations = allAnnotations
+			debugInfoComp.signature = _signature
+			debugInfoComp.signatureParameters = _signature_parameters
+			debugInfoComp.signatureReturnAnnotation = _signature_return_annotation
 
 		# variables to fill during compile phase
-		_paramCheckers:typing.Dict[str,AbstractCTNode] = {}
-		_returnChecker:AbstractCTNode = None
+		_paramCheckers:typing.Dict[str,AbstractCTNode|None] = {}
+		_returnChecker:AbstractCTNode|None = None
 
-		# compile
+		# ----------------------------------------------------------------
+		# ---- compile
 
-		outWarnList = []			# NOTE: we reuse this object for performance reasons
-		for k, t in _signature._parameters.items():
+		outWarnList = []			# NOTE: we reuse this list for performance reasons
+
+		for k, t in _signature_parameters.items():
+			outWarnList.clear()
 			assert isinstance(t, inspect.Parameter)
 			_bIsArgV = t.kind == inspect._ParameterKind.VAR_POSITIONAL
 			_bIsKWArgs = t.kind == inspect._ParameterKind.VAR_KEYWORD
 			_sType = _getTypeDescr(t)
 			c = CheckTypeCompiler.compile(k, _sType, t.annotation, _bIsArgV, _bIsKWArgs, t.default, outWarnList, bDebugComp)
 			if bDebugComp:
-				if c is not None:
-					print("\t@@>> Signature parameter compilation for " + repr(k) + ":")
-					c.dump("\t\t|\t")
-			if bDebug:
+				#if c is not None:
+				#	print("\t@@>> Signature parameter compilation for " + repr(k) + ":")
+				#	c.dump("\t\t|\t")
 				if outWarnList:
-					for entry in outWarnList:
-						print("WARNING: " + fn.__qualname__ + "(), param " + repr(t.name) + " : " + entry)
-					outWarnList.clear()
+					for warnEntry in outWarnList:
+						if debugInfoComp:
+							debugInfoComp.warnings.append(f"Parameter {t!r}: {warnEntry}")
+						print(f"WARNING: {fn.__qualname__}(), Parameter {t!r}: {warnEntry}")
 			if c is not None:
 				_paramCheckers[k] = c
-			#print("paramCheckers[" + k + "] =", c)
 
-		if _signature._return_annotation != inspect._empty:
-			outWarnList = []
-			_sType = _getTypeDescr(_signature._return_annotation)
+		if _signature_return_annotation != inspect._empty:
+			outWarnList.clear()
+			_sType = _getTypeDescr(_signature_return_annotation)
 			_returnChecker = CheckTypeCompiler.compile(
 				None,											# argName
 				_sType,											# sType
-				_signature._return_annotation,					# typeSpec
+				_signature_return_annotation,					# typeSpec
 				False,											# bKindIsArgV
 				False,											# bKindIsKWArg
 				inspect._empty,									# defaultValue
@@ -280,13 +278,22 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int
 				bDebugComp										# nEnableDebugging
 			)
 			if bDebugComp:
-				if _returnChecker is not None:
-					print("\t@@>> Signature parameter compilation for returned values:")
-					_returnChecker.dump("\t\t|\t")
-		#print("returnChecker =", repr(returnChecker.sType))
+				#if _returnChecker is not None:
+				#	print("\t@@>> Signature parameter compilation for returned values:")
+				#	_returnChecker.dump("\t\t|\t")
+				if outWarnList:
+					for warnEntry in outWarnList:
+						if debugInfoComp:
+							debugInfoComp.warnings.append(f"Return data: {warnEntry}")
+						print(f"WARNING: {fn.__qualname__}(), Return data: {warnEntry}")
+
 		_bIsMethod = "self" in _paramCheckers
 
-		# ----
+		if debugInfoComp:
+			debugInfoComp.paramCheckers = _paramCheckers
+			debugInfoComp.returnChecker = _returnChecker
+
+		# ----------------------------------------------------------------
 
 		_logDescend = None
 		if logDescend:
@@ -296,15 +303,29 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int
 				#if (_tmp[0] == "jk_logging") and (_tmp[-1].endswith("Logger")):
 				#	_logDescend = logDescend
 				_logDescend = logDescend
-			if bDebug and (_logDescend is None):
-				print("WARNING: " + fn.__qualname__ + "() has no suitable parameter 'log' for log descent!")
-			if bDebug:
-				print("@@>> Using log descend.")
-		else:
-			if bDebug:
-				print("@@>> Not using log descend.")
 
-		# ----
+			if debugInfoComp:
+				if _logDescend is None:
+					debugInfoComp.warnings.append(f"No suitable parameter 'log' for log descent!")
+				else:
+					debugInfoComp.infos.append("{Using log descend.")
+			else:
+				print(f"WARNING: {fn.__qualname__}(): No suitable parameter 'log' for log descent!")
+
+		else:
+			if debugInfoComp:
+				debugInfoComp.infos.append("Not using log descend.")
+
+		# ----------------------------------------------------------------
+
+		if debugInfoComp and bDebugCompPrint:
+			print()
+			print("@" * 120)
+			debugInfoComp.dump(prefix="@@@ ")
+			print("@" * 120)
+			print()
+
+		# ----------------------------------------------------------------
 
 		def _wrapper(*args, **kwargs):
 			# bind arguments
@@ -394,13 +415,18 @@ def checkFunctionSignature(bDebug:bool = False, bDebugComp:typing.Union[bool,int
 			return ret
 		#
 
+		# we return a new instance of _wrapper for each annotated function
 		_wrapper.orgName = fn.__name__
-		_wrapper.orgQualName = fn.__qualname__
+		_wrapper.orgQualName = fn.__qualname__			# the full qualified name
 		_wrapper.orgSignature = _signature
+		if bDebugComp:
+			_wrapper.debugInfoCompile = debugInfoComp
+
 		return _wrapper
 		#return _FunctionWrapper(fn, signature, paramCheckers, returnChecker, bDebug)
 	#
 
+	# we return a new instance of _wrap_the_function for each annotated function
 	return _wrap_the_function
 #
 

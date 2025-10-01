@@ -2,6 +2,8 @@
 
 import typing
 
+import jk_prettyprintobj
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -56,6 +58,12 @@ class CTIsType(AbstractCTNode):
 	# 	return module + '.' + klass.__qualname__
 	# #
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+		ctx.dumpVar("__expectedType", self.__expectedType)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -87,11 +95,11 @@ class CTIsType(AbstractCTNode):
 	# 	raise Exception("????expectedType: " + repr(self.__expectedType))
 	# #
 
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsType<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + "\t__expectedType=" + repr(self.__expectedType))
-		printFunc(prefix + ")>")
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTIsType<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + "\t__expectedType=" + repr(self.__expectedType))
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

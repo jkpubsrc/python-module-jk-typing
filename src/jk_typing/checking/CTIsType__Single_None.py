@@ -2,6 +2,8 @@
 
 import typing
 
+import jk_prettyprintobj
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -45,6 +47,11 @@ class CTIsType__Single_None(AbstractCTNode):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -63,10 +70,10 @@ class CTIsType__Single_None(AbstractCTNode):
 		return False
 	#
 
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsType__Single_None<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + ")>")
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTIsType__Single_None<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

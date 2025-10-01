@@ -2,6 +2,8 @@
 
 import typing
 
+import jk_prettyprintobj
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -47,6 +49,13 @@ class CTIsType__CheckItems_ExactTypeSequence(AbstractCTNode):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+		ctx.dumpVar("__keyCheckFunc", self.__keyCheckFunc)
+		ctx.dumpVar("__nestedCheckFuncList", self.__nestedCheckFuncList)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -75,15 +84,15 @@ class CTIsType__CheckItems_ExactTypeSequence(AbstractCTNode):
 		return True
 	#
 
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsType__CheckItems_ExactTypeSequence<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + "\t__expectedType=" + repr(self.__expectedType))
-		printFunc(prefix + "\t__nestedCheckFuncList=[")
-		for nestedCheckFunc in self.__nestedCheckFuncList:
-			nestedCheckFunc._dump(prefix + "\t\t", printFunc)
-		printFunc(prefix + "\t]")
-		printFunc(prefix + ")>")
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTIsType__CheckItems_ExactTypeSequence<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + "\t__expectedType=" + repr(self.__expectedType))
+	# 	printFunc(prefix + "\t__nestedCheckFuncList=[")
+	# 	for nestedCheckFunc in self.__nestedCheckFuncList:
+	# 		nestedCheckFunc._dump(prefix + "\t\t", printFunc)
+	# 	printFunc(prefix + "\t]")
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

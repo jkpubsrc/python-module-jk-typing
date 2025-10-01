@@ -37,3 +37,10 @@
 
 * 2025-02-01:
 	* Fixed: Processing *argv
+
+* 2025-10-01:
+	* Refactoring
+	* Improved: Debugging
+	* Improved: Supporting new union type hint syntax
+	* Testing: Started to migrate unit tests to jk_testing2
+

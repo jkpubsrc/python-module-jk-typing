@@ -3,6 +3,8 @@
 import typing
 import sys
 
+import jk_prettyprintobj
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -49,6 +51,12 @@ class CTIsType__Single_NewType(AbstractCTNode):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+		ctx.dumpVar("__expectedTypeName", self.__expectedTypeName)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -85,11 +93,11 @@ class CTIsType__Single_NewType(AbstractCTNode):
 		return ret
 	#
 
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsType__Single_NewType<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + "\t__expectedTypeName=" + repr(self.__expectedTypeName))
-		printFunc(prefix + ")>")
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTIsType__Single_NewType<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + "\t__expectedTypeName=" + repr(self.__expectedTypeName))
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

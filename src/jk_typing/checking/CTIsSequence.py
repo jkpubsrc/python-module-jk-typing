@@ -2,6 +2,8 @@
 
 import typing
 
+import jk_prettyprintobj
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -46,6 +48,11 @@ class CTIsSequence(AbstractCTNode):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -58,11 +65,11 @@ class CTIsSequence(AbstractCTNode):
 		return False
 	#
 
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsSequence<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + "\t__expectedTypes=" + repr(self.__expectedTypes))
-		printFunc(prefix + ")>")
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTIsSequence<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + "\t__expectedTypes=" + repr(self.__expectedTypes))
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

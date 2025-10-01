@@ -2,6 +2,8 @@
 
 import typing
 
+import jk_prettyprintobj
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -42,6 +44,13 @@ class CTIsDict(AbstractCTNode):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+		ctx.dumpVar("__keyCheckFunc", self.__keyCheckFunc)
+		ctx.dumpVar("__valueCheckFunc", self.__valueCheckFunc)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -62,14 +71,15 @@ class CTIsDict(AbstractCTNode):
 				return False
 		return True
 	#
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsDict<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + "\t__keyCheckFunc=")
-		self.__keyCheckFunc._dump(prefix + "\t\t", printFunc)
-		printFunc(prefix + "\t__valueCheckFunc=")
-		self.__valueCheckFunc._dump(prefix + "\t\t", printFunc)
-		printFunc(prefix + ")>")
-	#
+
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTIsDict<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + "\t__keyCheckFunc=")
+	# 	self.__keyCheckFunc._dump(prefix + "\t\t", printFunc)
+	# 	printFunc(prefix + "\t__valueCheckFunc=")
+	# 	self.__valueCheckFunc._dump(prefix + "\t\t", printFunc)
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

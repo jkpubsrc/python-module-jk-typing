@@ -25,6 +25,7 @@ classifiers = [
 	"Programming Language :: Python :: 3",
 ]
 dependencies = [
+	"jk_prettyprintobj >= 0.2025.8.14",
 ]
 
 #[project.urls]

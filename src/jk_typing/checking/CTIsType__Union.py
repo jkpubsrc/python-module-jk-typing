@@ -2,6 +2,8 @@
 
 import typing
 
+import jk_prettyprintobj
+
 from .AbstractCTNode import AbstractCTNode
 
 
@@ -45,6 +47,12 @@ class CTIsType__Union(AbstractCTNode):
 	## Helper Methods
 	################################################################################################################################
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		ctx.dumpVar("argName", self.argName)
+		ctx.dumpVar("sType", self.sType)
+		ctx.dumpVar("__nestedAlternativeCheckFuncs", self.__nestedAlternativeCheckFuncs)
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -58,14 +66,14 @@ class CTIsType__Union(AbstractCTNode):
 		return False
 	#
 
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		printFunc(prefix + "CTIsType__Union<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
-		printFunc(prefix + "\t__nestedAlternativeCheckFuncs=[")
-		for x in self.__nestedAlternativeCheckFuncs:
-			x._dump(prefix + "\t\t", printFunc)
-		printFunc(prefix + "\t]")
-		printFunc(prefix + ")>")
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	printFunc(prefix + "CTIsType__Union<( argName=" + repr(self.argName) + ", sType=" + repr(self.sType))
+	# 	printFunc(prefix + "\t__nestedAlternativeCheckFuncs=[")
+	# 	for x in self.__nestedAlternativeCheckFuncs:
+	# 		x._dump(prefix + "\t\t", printFunc)
+	# 	printFunc(prefix + "\t]")
+	# 	printFunc(prefix + ")>")
+	# #
 
 #
 

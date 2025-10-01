@@ -3,11 +3,12 @@
 import typing
 import inspect
 
+import jk_prettyprintobj
 
 
 
 
-class AbstractCTNode(object):
+class AbstractCTNode(jk_prettyprintobj.DumpMixin):
 
 	################################################################################################################################
 	## Constructor
@@ -26,6 +27,10 @@ class AbstractCTNode(object):
 		print(f">> Returns **{bValue}** here: {codeFileName}:{lineNo}")
 	#
 
+	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
+		raise NotImplementedError()
+	#
+
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
@@ -34,18 +39,18 @@ class AbstractCTNode(object):
 		raise NotImplementedError()
 	#
 
-	def dump(self, prefix:str = None, printFunc:typing.Callable = None):
-		if prefix is None:
-			prefix = ""
-		if printFunc is None:
-			printFunc = print
+	# def dump(self, prefix:str = None, printFunc:typing.Callable = None):
+	# 	if prefix is None:
+	# 		prefix = ""
+	# 	if printFunc is None:
+	# 		printFunc = print
+	# 
+	# 	self._dump(prefix, printFunc)
+	# #
 
-		self._dump(prefix, printFunc)
-	#
-
-	def _dump(self, prefix:str, printFunc:typing.Callable):
-		raise NotImplementedError()
-	#
+	# def _dump(self, prefix:str, printFunc:typing.Callable):
+	# 	raise NotImplementedError()
+	# #
 
 #
 

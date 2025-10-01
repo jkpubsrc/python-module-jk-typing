@@ -20,11 +20,13 @@
 		"license": "Apache2",
 		"name": "jk_typing",
 		"packageClass": "python-module",
-		"version": "0.2025.2.1"
+		"version": "0.2025.10.1"
 	},
 	"requirements": {
 		"htmlcssjs_packages": [],
-		"python_packages": [],
+		"python_packages": [
+			"jk_prettyprintobj",
+		],
 		"python_packages_dev": [],
 		"python_packages_recommended": [],
 		"system_apt_packages": []
