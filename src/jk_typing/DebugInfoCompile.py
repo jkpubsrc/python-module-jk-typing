@@ -25,6 +25,9 @@ class DebugInfoCompile(jk_prettyprintobj.DumpMixin):
 	# Constructor method.
 	#
 	def __init__(self):
+		self.filePath:str|None = None
+		self.lineNo:int|None = None
+
 		self.fqn:str|None = None
 		self.allAnnotations:typing.Dict[str,typing.Any]|None = None
 		self.signature:inspect.Signature|None = None

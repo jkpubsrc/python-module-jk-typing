@@ -44,3 +44,16 @@
 	* Improved: Supporting new union type hint syntax
 	* Testing: Started to migrate unit tests to jk_testing2
 
+* 2025-10-02:
+	* Fixed: Printing log descend error message only on error
+	* Improved: Using python warnings
+	* Improved: Debugging
+
+* 2025-10-03:
+	* Fixed: Validating variants of str[]
+	* Fixed: Supporting new union type hint syntax
+	* Improved: Adding support for mappings
+
+* 2025-11-25:
+	* Improved: Error message
+

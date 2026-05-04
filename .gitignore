@@ -16,6 +16,8 @@ testing/*.sh
 **/*.OLD
 **/*.bak
 **/*.DEACTIVATED
+**/*.OBSOLETE
+**/*.SAVED
 OLD
 *_old
 *_OLD
@@ -23,9 +25,9 @@ OLD
 *.bak
 *.DELETE
 *.DEACTIVATED
+*.OBSOLETE
+*.SAVED
 
-install*.sh
-publish*.sh
-uninstall*.sh
-test*.sh
+**/*.sh
+*.sh
 

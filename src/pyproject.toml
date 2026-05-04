@@ -20,7 +20,14 @@ keywords = [
 ]
 license = { text = "Apache2" }
 classifiers = [
-	"Development Status :: 5 - Production/Stable",
+	# https://pypi.org/classifiers/
+	# ----------------------------------------------------------------
+	# "Development Status :: 2 - Pre-Alpha",
+	# "Development Status :: 3 - Alpha",
+	"Development Status :: 4 - Beta",
+	# "Development Status :: 5 - Production/Stable",
+	# "Development Status :: 6 - Mature"
+	# ----------------------------------------------------------------
 	"License :: OSI Approved :: Apache Software License",
 	"Programming Language :: Python :: 3",
 ]

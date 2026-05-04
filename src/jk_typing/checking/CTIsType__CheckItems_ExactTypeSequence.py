@@ -52,7 +52,7 @@ class CTIsType__CheckItems_ExactTypeSequence(AbstractCTNode):
 	def _dump(self, ctx:jk_prettyprintobj.DumpCtx):
 		ctx.dumpVar("argName", self.argName)
 		ctx.dumpVar("sType", self.sType)
-		ctx.dumpVar("__keyCheckFunc", self.__keyCheckFunc)
+		ctx.dumpVar("__expectedType", self.__expectedType)
 		ctx.dumpVar("__nestedCheckFuncList", self.__nestedCheckFuncList)
 	#
 

@@ -8,6 +8,7 @@ import inspect
 from .checking.AbstractCTNode import AbstractCTNode
 from .checking.CheckTypeCompiler import CheckTypeCompiler
 from .DebugInfoCompile import DebugInfoCompile
+from ._PySrcHelper import _PySrcHelper
 
 
 
@@ -148,48 +149,6 @@ def _checkType(value, typeSpec, indent:int):
 
 
 
-def _getTypeDescr(t:typing.Union[inspect.Parameter,typing.Any]) -> str:
-	if t is None:
-		return "void"
-	
-	retExtra = ""
-	if isinstance(t, inspect.Parameter):
-		if t.kind == inspect._ParameterKind.VAR_POSITIONAL:
-			retExtra = "*"
-		elif t.kind == inspect._ParameterKind.VAR_KEYWORD:
-			retExtra = "**"
-		elif t.kind == inspect._ParameterKind.POSITIONAL_OR_KEYWORD:
-			pass
-		elif t.kind == inspect._ParameterKind.POSITIONAL_ONLY:
-			pass
-		elif t.kind == inspect._ParameterKind.KEYWORD_ONLY:
-			pass
-		else:
-			# NOTE: this is quite unexpected :-/
-			pass
-
-	s = repr(t)
-	# s should be something like this:
-	#	 "<Parameter "abc">
-	#	 "<Parameter "abc:int">
-	#	 "<Parameter "*args">
-	if s.startswith("<Parameter \"*"):
-		s = s[13:-2]
-	elif s.startswith("<Parameter \""):
-		s = s[12:-2]
-	elif s.startswith("<class '"):
-		s = s[8:-2]
-	else:
-		return retExtra + "(unknown:" + s + ")"
-
-	pos = s.find(":")
-	if pos > 0:
-		return retExtra + s[pos+1:].strip()
-	else:
-		return retExtra + "?"
-#
-
-
 #
 # this is the annotation wrapper that receives arguments and returns the function that does the wrapping
 #
@@ -201,18 +160,23 @@ def _getTypeDescr(t:typing.Union[inspect.Parameter,typing.Any]) -> str:
 # @param		bool bLogWithhold					(optional) Only log if a minimum log level of warning occurs.
 #
 def checkFunctionSignature(
-		bDebug:bool = False,
-		bDebugComp:typing.Union[bool,int] = False,
-		bDebugCompPrint:typing.Union[bool,int] = False,
+		*,
 		logDescend:str = None,
 		logLevel = None,
 		bLogWithhold:bool = False,
+		bDebugComp:typing.Union[bool,int] = False,
+		bDebugCompPrint:typing.Union[bool,int] = False,
+		bDebugRuntime:typing.Union[bool,int] = False,
+		bDebug:typing.Union[bool,int] = False,				# DEPRECATED
 	):
 
-	assert isinstance(bDebug, bool)
+	assert isinstance(bDebug, (bool, int))
 	assert isinstance(bDebugComp, (bool, int))
 	assert isinstance(bDebugCompPrint, (bool, int))
+	assert isinstance(bDebugRuntime, (bool, int))
 	assert isinstance(bLogWithhold, bool)
+	if bDebug:
+		bDebugRuntime = bDebug
 
 	# ----
 
@@ -230,6 +194,8 @@ def checkFunctionSignature(
 		_signature_return_annotation:type|inspect._empty|inspect._void|None = _signature._return_annotation		# receives a type annotation structure
 
 		if debugInfoComp:
+			debugInfoComp.filePath = inspect.getabsfile(fn)
+			debugInfoComp.lineNo = _PySrcHelper.getLineNo(fn)
 			debugInfoComp.fqn = fn.__qualname__
 			debugInfoComp.allAnnotations = allAnnotations
 			debugInfoComp.signature = _signature
@@ -245,13 +211,22 @@ def checkFunctionSignature(
 
 		outWarnList = []			# NOTE: we reuse this list for performance reasons
 
-		for k, t in _signature_parameters.items():
+		for k, p in _signature_parameters.items():
 			outWarnList.clear()
-			assert isinstance(t, inspect.Parameter)
-			_bIsArgV = t.kind == inspect._ParameterKind.VAR_POSITIONAL
-			_bIsKWArgs = t.kind == inspect._ParameterKind.VAR_KEYWORD
-			_sType = _getTypeDescr(t)
-			c = CheckTypeCompiler.compile(k, _sType, t.annotation, _bIsArgV, _bIsKWArgs, t.default, outWarnList, bDebugComp)
+			assert isinstance(p, inspect.Parameter)
+			_bIsArgV = p.kind == inspect._ParameterKind.VAR_POSITIONAL
+			_bIsKWArgs = p.kind == inspect._ParameterKind.VAR_KEYWORD
+			_sType = CheckTypeCompiler.paramTypeToStr(p)
+			c = CheckTypeCompiler.compile(
+				k,												# argName
+				_sType,											# sType
+				p.annotation,									# typeSpec
+				_bIsArgV,										# bKindIsArgV
+				_bIsKWArgs,										# bKindIsKWArg
+				p.default,										# defaultValue
+				outWarnList,									# outWarnList
+				bDebugComp,										# nEnableDebugging
+			)
 			if bDebugComp:
 				#if c is not None:
 				#	print("\t@@>> Signature parameter compilation for " + repr(k) + ":")
@@ -259,14 +234,14 @@ def checkFunctionSignature(
 				if outWarnList:
 					for warnEntry in outWarnList:
 						if debugInfoComp:
-							debugInfoComp.warnings.append(f"Parameter {t!r}: {warnEntry}")
-						print(f"WARNING: {fn.__qualname__}(), Parameter {t!r}: {warnEntry}")
+							debugInfoComp.warnings.append(f"Parameter {p!r}: {warnEntry}")
+						_PySrcHelper.warn(fn, f"Parameter {p!r}: {warnEntry}")
 			if c is not None:
 				_paramCheckers[k] = c
 
 		if _signature_return_annotation != inspect._empty:
 			outWarnList.clear()
-			_sType = _getTypeDescr(_signature_return_annotation)
+			_sType = CheckTypeCompiler.paramTypeToStr(_signature_return_annotation)
 			_returnChecker = CheckTypeCompiler.compile(
 				None,											# argName
 				_sType,											# sType
@@ -275,7 +250,7 @@ def checkFunctionSignature(
 				False,											# bKindIsKWArg
 				inspect._empty,									# defaultValue
 				outWarnList,									# outWarnList
-				bDebugComp										# nEnableDebugging
+				bDebugComp,										# nEnableDebugging
 			)
 			if bDebugComp:
 				#if _returnChecker is not None:
@@ -285,7 +260,7 @@ def checkFunctionSignature(
 					for warnEntry in outWarnList:
 						if debugInfoComp:
 							debugInfoComp.warnings.append(f"Return data: {warnEntry}")
-						print(f"WARNING: {fn.__qualname__}(), Return data: {warnEntry}")
+						_PySrcHelper.warn(fn, f"Return data: {warnEntry}")
 
 		_bIsMethod = "self" in _paramCheckers
 
@@ -306,11 +281,12 @@ def checkFunctionSignature(
 
 			if debugInfoComp:
 				if _logDescend is None:
-					debugInfoComp.warnings.append(f"No suitable parameter 'log' for log descent!")
+					debugInfoComp.warnings.append("No suitable parameter 'log' for log descent!")
 				else:
-					debugInfoComp.infos.append("{Using log descend.")
+					debugInfoComp.infos.append("Using log descend.")
 			else:
-				print(f"WARNING: {fn.__qualname__}(): No suitable parameter 'log' for log descent!")
+				if _logDescend is None:
+					_PySrcHelper.warn(fn, "No suitable parameter 'log' for log descent!")
 
 		else:
 			if debugInfoComp:
@@ -340,7 +316,7 @@ def checkFunctionSignature(
 			# ----------------------------------------------------------------
 			# check arguments. delay raising of errors to print all error messages before raising an exception.
 
-			if bDebug:
+			if bDebugRuntime:
 				print("@@>> Invoking function/method: " + fn.__qualname__ + "(..)")
 
 				err = None
@@ -352,7 +328,7 @@ def checkFunctionSignature(
 						if not c.__call__(v):
 							print("\targument " + repr(k) + ": " + c.sType + "  =>  ✖")
 							if not err:
-								err = ValueError("Argument " + repr(k) + " for " + fn.__name__ + "() is of type '" + repr(type(v)) + "' which does not match '" + c.sType + "' as expected!")
+								err = ValueError("Argument " + repr(k) + " for " + fn.__name__ + "() of type '" + repr(type(v)) + "' does not match '" + c.sType + "' as expected!")
 						else:
 							print("\targument " + repr(k) + ": " + c.sType + "  =>  ✔")
 					else:
@@ -367,8 +343,8 @@ def checkFunctionSignature(
 					c = _paramCheckers.get(k)
 					if c:
 						if not c.__call__(v):
-							c.dump()
-							raise ValueError("Argument " + repr(k) + " for " + fn.__name__ + "() is of type '" + repr(type(v)) + "' which does not match '" + c.sType + "' as expected!")
+							# c.dump()
+							raise ValueError("Argument " + repr(k) + " for " + fn.__name__ + "() of type '" + repr(type(v)) + "' does not match '" + c.sType + "' as expected!")
 
 			# ----------------------------------------------------------------
 			# invoke the function
@@ -395,11 +371,11 @@ def checkFunctionSignature(
 			# ----------------------------------------------------------------
 			# check the return value.
 
-			if bDebug:
+			if bDebugRuntime:
 				if _returnChecker:
 					if not _returnChecker.__call__(ret):
 						print("\treturn value: " + _returnChecker.sType + "  =>  ✖")
-						raise ValueError("Return value for " + fn.__name__ + "() is of type '" + repr(type(ret)) + "' which does not match '" + _returnChecker.sType + "' as expected!")
+						raise ValueError("Return value for " + fn.__name__ + "() of type '" + repr(type(ret)) + "' does not match '" + _returnChecker.sType + "' as expected!")
 					else:
 						print("\treturn value: " + _returnChecker.sType + "  =>  ✔")
 				else:
@@ -408,7 +384,7 @@ def checkFunctionSignature(
 			else:
 				if _returnChecker:
 					if not _returnChecker.__call__(ret):
-						raise ValueError("Return value for " + fn.__name__ + "() is of type '" + repr(type(ret)) + "' which does not match '" + _returnChecker.sType + "' as expected!")
+						raise ValueError("Return value for " + fn.__name__ + "() of type '" + repr(type(ret)) + "' does not match '" + _returnChecker.sType + "' as expected!")
 
 			# ----------------------------------------------------------------
 
@@ -423,7 +399,6 @@ def checkFunctionSignature(
 			_wrapper.debugInfoCompile = debugInfoComp
 
 		return _wrapper
-		#return _FunctionWrapper(fn, signature, paramCheckers, returnChecker, bDebug)
 	#
 
 	# we return a new instance of _wrap_the_function for each annotated function
