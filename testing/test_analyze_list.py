@@ -16,12 +16,12 @@ import jk_typing.checking
 
 
 @jk_typing.checkFunctionSignature(bDebugComp=2, bDebugRuntime=False)
-def someFunction1(someArg:typing.List[typing.Any]):
+def someFunction1(someArg:list):
 	return someArg
 #
 
 @jk_typing.checkFunctionSignature(bDebugComp=2, bDebugRuntime=False)
-def someFunction2(someArg:list):
+def someFunction2(someArg:typing.List[str]):
 	return someArg
 #
 

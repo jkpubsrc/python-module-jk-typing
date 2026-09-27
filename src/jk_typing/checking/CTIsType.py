@@ -24,9 +24,10 @@ class CTIsType(AbstractCTNode):
 	# @param		str argName				(optional) The name of the argument. This information is used if an error occurs.
 	# @param		str sType				(required) A string representation of the return type (for output).
 	# @param		bool bDebug				(required) ???
-	# @param		* expectedType			(required) A type specification object as returned by inspect
+	# @param		any expectedType		(required) If not None the type the argument value must be of.
+	# 										This is a type specification object as returned by inspect.
 	#
-	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int], expectedType:typing.Union[type,typing.Callable]):
+	def __init__(self, argName:str|None, sType:str, nDebug:bool|int, expectedType:type|typing.Callable):
 		if argName is not None:
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)

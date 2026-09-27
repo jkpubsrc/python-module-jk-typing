@@ -209,7 +209,7 @@ def checkFunctionSignature(
 		# ----------------------------------------------------------------
 		# ---- compile
 
-		outWarnList = []			# NOTE: we reuse this list for performance reasons
+		outWarnList:list[str] = []			# NOTE: we reuse this list for performance reasons
 
 		for k, p in _signature_parameters.items():
 			outWarnList.clear()
@@ -218,14 +218,14 @@ def checkFunctionSignature(
 			_bIsKWArgs = p.kind == inspect._ParameterKind.VAR_KEYWORD
 			_sType = CheckTypeCompiler.paramTypeToStr(p)
 			c = CheckTypeCompiler.compile(
-				k,												# argName
-				_sType,											# sType
-				p.annotation,									# typeSpec
-				_bIsArgV,										# bKindIsArgV
-				_bIsKWArgs,										# bKindIsKWArg
-				p.default,										# defaultValue
-				outWarnList,									# outWarnList
-				bDebugComp,										# nEnableDebugging
+				k,												# argName - the name of the parameter
+				_sType,											# sType - the type hints converted to string for printing
+				p.annotation,									# typeSpec - the type hint
+				_bIsArgV,										# bKindIsArgV - True if parameter is positional
+				_bIsKWArgs,										# bKindIsKWArg - True if parameter is keyword
+				p.default,										# defaultValue - the parameter default value
+				outWarnList,									# outWarnList - receives warnings
+				bDebugComp,										# nEnableDebugging - True or greater than zero to enable
 			)
 			if bDebugComp:
 				#if c is not None:
@@ -243,14 +243,14 @@ def checkFunctionSignature(
 			outWarnList.clear()
 			_sType = CheckTypeCompiler.paramTypeToStr(_signature_return_annotation)
 			_returnChecker = CheckTypeCompiler.compile(
-				None,											# argName
-				_sType,											# sType
-				_signature_return_annotation,					# typeSpec
-				False,											# bKindIsArgV
-				False,											# bKindIsKWArg
-				inspect._empty,									# defaultValue
-				outWarnList,									# outWarnList
-				bDebugComp,										# nEnableDebugging
+				None,											# argName - the name of the parameter
+				_sType,											# sType - the type hints converted to string for printing
+				_signature_return_annotation,					# typeSpec - the type hint
+				False,											# bKindIsArgV - True if parameter is positional
+				False,											# bKindIsKWArg - True if parameter is keyword
+				inspect._empty,									# defaultValue - the parameter default value
+				outWarnList,									# outWarnList - receives warnings
+				bDebugComp,										# nEnableDebugging - True or greater than zero to enable
 			)
 			if bDebugComp:
 				#if _returnChecker is not None:

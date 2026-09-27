@@ -24,7 +24,7 @@ class CTIsType__CheckItems_ExactTypeSequence(AbstractCTNode):
 	# @param		bool bDebug				(required) ???
 	# @param		* expectedType			(required) A type specification object as returned by inspect
 	#
-	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int], expectedType:type, nestedCheckFuncList:typing.List[AbstractCTNode]):
+	def __init__(self, argName:str|None, sType:str, nDebug:bool|int, expectedType:type, nestedCheckFuncList:typing.List[AbstractCTNode]):
 		if argName is not None:
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)

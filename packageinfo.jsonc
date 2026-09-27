@@ -20,7 +20,7 @@
 		"license": "Apache2",
 		"name": "jk_typing",
 		"packageClass": "python-module",
-		"version": "0.2025.11.25"
+		"version": "0.2026.9.27"
 	},
 	"requirements": {
 		"htmlcssjs_packages": [],

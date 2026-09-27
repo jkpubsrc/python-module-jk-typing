@@ -19,7 +19,7 @@ class CTIsNone(AbstractCTNode):
 	#
 	# Constructor method.
 	#
-	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int]):
+	def __init__(self, argName:str|None, sType:str, nDebug:bool|int):
 		if argName is not None:
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)

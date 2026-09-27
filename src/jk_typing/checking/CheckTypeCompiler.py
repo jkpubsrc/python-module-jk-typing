@@ -21,6 +21,7 @@ from .CTIsCallable import CTIsCallable
 from .CTIsType__CheckItems_ExactTypeSequence import CTIsType__CheckItems_ExactTypeSequence
 from .CTIsType__Single_NewType import CTIsType__Single_NewType
 from .CTIsType__Single_None import CTIsType__Single_None
+from .CTIsType__TypeWithArgument import CTIsType__TypeWithArgument
 
 
 
@@ -51,7 +52,7 @@ class CheckTypeCompiler(object):
 
 	@staticmethod
 	def _0_compile_checking(
-			argName:typing.Union[str,None],
+			argName:str|None,
 			sType:str,
 			typeSpec,
 			outWarnList:typing.List[str],
@@ -310,7 +311,7 @@ class CheckTypeCompiler(object):
 					CheckTypeCompiler._0_compile_checking(argName, sType, typeSpec.__args__[1], outWarnList, nEnableDebugging)
 				)
 
-			if _typeSpec__origin__ == typing.Union:
+			if (_typeSpec__origin__ == typing.Union):
 				return CTIsType__Union(
 					argName,
 					sType,
@@ -325,6 +326,16 @@ class CheckTypeCompiler(object):
 				argName,
 				sType,
 				nEnableDebugging,
+			)
+
+		elif (_typeSpec__origin__ == type):
+			assert len(typeSpec.__args__) == 1
+			assert isinstance(typeSpec.__args__[0], type)
+			return CTIsType__TypeWithArgument(
+				argName,
+				sType,
+				nEnableDebugging,
+				typeSpec.__args__[0],
 			)
 
 		elif (_typeSpec__origin__ == list):
@@ -565,15 +576,15 @@ class CheckTypeCompiler(object):
 	#
 	@staticmethod
 	def compile(
-			argName:typing.Union[str,None],
+			argName:str|None,
 			sType:str,
 			typeSpec,
 			bIsArgV:bool,
 			bIsKWArg:bool,
 			defaultValue,
-			outWarnList:typing.List[str],
-			nEnableDebugging:typing.Union[int,bool] = 0
-		) -> typing.Union[AbstractCTNode,None]:
+			outWarnList:list[str],
+			nEnableDebugging:int|bool = 0
+		) -> AbstractCTNode|None:
 
 		if argName is not None:
 			assert isinstance(argName, str)

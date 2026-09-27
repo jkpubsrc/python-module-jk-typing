@@ -21,7 +21,7 @@ class CTIsABCMapping(AbstractCTNode):
 	#
 	# Constructor method.
 	#
-	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int], keyCheckFunc, valueCheckFunc):
+	def __init__(self, argName:str|None, sType:str, nDebug:bool|int, keyCheckFunc, valueCheckFunc):
 		if argName is not None:
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)

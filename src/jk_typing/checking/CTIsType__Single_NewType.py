@@ -27,7 +27,7 @@ class CTIsType__Single_NewType(AbstractCTNode):
 	# @param		bool bDebug				(required) ???
 	# @param		* expectedType			(required) A type specification object as returned by inspect
 	#
-	def __init__(self, argName:typing.Union[str,None], sType:str, nDebug:typing.Union[bool,int], expectedType:typing.Callable):
+	def __init__(self, argName:str|None, sType:str, nDebug:bool|int, expectedType:typing.Callable):
 		if argName is not None:
 			assert isinstance(argName, str)
 		assert isinstance(sType, str)

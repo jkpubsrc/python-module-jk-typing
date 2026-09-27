@@ -9,6 +9,7 @@ src/*.egg-info/
 
 examples/*.log
 testing/*.sh
+_tools/
 
 **/OLD
 **/*_old

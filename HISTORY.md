@@ -57,3 +57,8 @@
 * 2025-11-25:
 	* Improved: Error message
 
+* 2026-09-27:
+	* Improved: Type hints
+	* Added: Support for type[T]
+
+
